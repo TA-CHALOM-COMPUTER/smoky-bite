@@ -413,142 +413,222 @@ body::after{
 .cart-empty-text{font-size:16px;color:var(--muted);font-weight:700;}
 .cart-empty-sub{font-size:12px;color:#6a5040;}
 
-/* Section Divider */
-.section-divider{
-  display:flex;align-items:center;gap:10px;
-  padding:8px 24px 4px;
+/* ── Section Label ── */
+.sec-label{
+  display:flex;align-items:center;gap:8px;
+  padding:16px 20px 8px;
 }
-.section-divider::before,.section-divider::after{content:"";flex:1;height:1px;background:rgba(46,32,24,0.6);}
-.section-divider span{font-size:10px;font-weight:700;letter-spacing:0.1em;color:var(--muted);text-transform:uppercase;white-space:nowrap;}
+.sec-label-icon{
+  width:22px;height:22px;border-radius:6px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;flex-shrink:0;
+}
+.sec-label-icon.orange{background:rgba(255,85,0,0.15);}
+.sec-label-icon.gold{background:rgba(255,215,0,0.12);}
+.sec-label-icon.green{background:rgba(34,197,94,0.12);}
+.sec-label-text{font-size:11px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;}
+.sec-label-text.orange{color:var(--fire2);}
+.sec-label-text.gold{color:var(--gold);}
+.sec-label-text.green{color:var(--green);}
+.sec-label-line{flex:1;height:1px;background:rgba(255,255,255,0.06);}
 
-/* Order Summary */
-.order-summary{
-  margin:0 16px 8px;
-  background:rgba(28,24,18,0.7);
-  border:1px solid rgba(46,32,24,0.7);
-  border-radius:16px;overflow:hidden;
-  backdrop-filter:blur(8px);
+/* ── Block wrapper shared ── */
+.pro-block{
+  margin:0 14px 10px;
+  background:rgba(22,18,13,0.85);
+  border:1px solid rgba(255,255,255,0.06);
+  border-radius:14px;overflow:hidden;
+  backdrop-filter:blur(12px);
 }
-.os-header{
-  padding:11px 16px;background:rgba(255,85,0,0.08);
-  border-bottom:1px solid rgba(46,32,24,0.6);
-  font-size:12px;font-weight:700;color:var(--fire2);
-  letter-spacing:0.04em;display:flex;align-items:center;gap:6px;
-}
-.os-item{display:flex;justify-content:space-between;align-items:baseline;padding:10px 16px;border-bottom:1px solid rgba(46,32,24,0.4);font-size:13px;}
-.os-item:last-child{border-bottom:none;}
-.os-item-name{font-weight:600;margin-bottom:2px;}
-.os-item-detail{font-size:10px;color:var(--muted);}
-.os-item-price{font-weight:800;color:var(--gold);margin-left:12px;white-space:nowrap;}
-.os-promo-tag{display:inline-block;font-size:9px;font-weight:700;background:rgba(255,85,0,0.18);color:var(--fire2);border-radius:4px;padding:1px 5px;margin-left:4px;}
-.os-total-row{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;background:rgba(255,85,0,0.06);border-top:1px solid rgba(255,85,0,0.2);}
-.os-total-label{font-size:13px;color:var(--muted);font-weight:600;}
-.os-total-amount{font-size:26px;font-weight:900;color:var(--gold);}
-.os-total-note{font-size:10px;color:var(--muted);margin-top:2px;}
-.count-chip{display:inline-flex;align-items:center;justify-content:center;background:rgba(255,85,0,0.18);color:var(--fire2);border-radius:20px;padding:2px 8px;font-size:11px;font-weight:700;margin-left:4px;}
 
-/* Sauce & Veg */
-.modal-sauce-section{
-  margin:0 16px 8px;
-  background:rgba(28,24,18,0.7);
-  border:1px solid rgba(46,32,24,0.7);
-  border-radius:16px;overflow:hidden;
-  backdrop-filter:blur(8px);
+/* ── ORDER RECEIPT ── */
+.receipt-head{
+  padding:14px 16px 12px;
+  display:flex;align-items:center;justify-content:space-between;
+  border-bottom:1px solid rgba(255,255,255,0.05);
 }
-.modal-sauce-item{padding:14px 16px;}
-.msi-row{display:flex;align-items:flex-start;gap:10px;}
-.msi-label{font-size:10px;font-weight:700;letter-spacing:0.06em;color:var(--muted);text-transform:uppercase;min-width:28px;padding-top:6px;}
-.sauce-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px;flex:1;}
+.receipt-id{font-size:10px;color:var(--muted);font-family:monospace;letter-spacing:0.08em;}
+.receipt-id span{color:var(--fire2);font-weight:700;}
+.count-chip{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:rgba(255,85,0,0.15);color:var(--fire2);
+  border:1px solid rgba(255,85,0,0.2);
+  border-radius:20px;padding:3px 10px;font-size:11px;font-weight:700;
+}
+
+/* receipt rows */
+.rcp-row{
+  display:flex;align-items:center;
+  padding:11px 16px;
+  border-bottom:1px solid rgba(255,255,255,0.04);
+  gap:12px;
+}
+.rcp-row:last-child{border-bottom:none;}
+.rcp-num{
+  width:22px;height:22px;border-radius:6px;
+  background:rgba(255,85,0,0.12);
+  color:var(--fire);font-size:11px;font-weight:800;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.rcp-body{flex:1;min-width:0;}
+.rcp-name{font-size:13px;font-weight:700;line-height:1.3;margin-bottom:2px;}
+.rcp-meta{display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+.rcp-tag{
+  display:inline-flex;align-items:center;
+  font-size:10px;color:var(--muted);
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.06);
+  border-radius:4px;padding:1px 6px;
+  font-weight:600;
+}
+.rcp-tag.size-small{color:#f97316;border-color:rgba(249,115,22,0.2);background:rgba(249,115,22,0.06);}
+.rcp-tag.size-jumbo{color:#a78bfa;border-color:rgba(167,139,250,0.2);background:rgba(167,139,250,0.06);}
+.rcp-tag.promo{color:var(--green);border-color:rgba(34,197,94,0.2);background:rgba(34,197,94,0.06);}
+.rcp-qty{font-size:10px;color:var(--muted);}
+.rcp-right{display:flex;flex-direction:column;align-items:flex-end;gap:2px;flex-shrink:0;}
+.rcp-price{font-size:15px;font-weight:900;color:var(--gold);}
+.rcp-unit{font-size:10px;color:var(--muted);}
+
+/* dotted separator */
+.rcp-dots{
+  margin:0 16px;
+  border:none;
+  border-top:1px dashed rgba(255,255,255,0.07);
+}
+
+/* total bar */
+.rcp-total{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 16px;
+  background:linear-gradient(135deg,rgba(255,85,0,0.07),rgba(255,170,0,0.05));
+  border-top:1px solid rgba(255,85,0,0.15);
+}
+.rcp-total-left{}
+.rcp-total-label{font-size:11px;color:var(--muted);font-weight:600;margin-bottom:2px;}
+.rcp-total-note{font-size:10px;color:rgba(34,197,94,0.7);display:flex;align-items:center;gap:4px;}
+.rcp-total-amount{font-size:30px;font-weight:900;color:var(--gold);letter-spacing:-0.5px;}
+
+/* ── PROMPTPAY QR ── */
+.qr-card{
+  margin:0 14px 10px;
+  background:rgba(22,18,13,0.85);
+  border:1px solid rgba(255,215,0,0.1);
+  border-radius:14px;overflow:hidden;
+  backdrop-filter:blur(12px);
+}
+.qr-inner{padding:16px;display:flex;gap:16px;align-items:center;}
+.qr-frame{
+  flex-shrink:0;width:100px;height:100px;
+  border-radius:12px;background:white;
+  padding:5px;
+  box-shadow:0 0 0 1px rgba(255,215,0,0.2),0 8px 24px rgba(0,0,0,0.4);
+}
+.qr-frame img{width:100%;height:100%;display:block;border-radius:7px;image-rendering:pixelated;}
+.qr-details{flex:1;min-width:0;}
+.qr-badge{
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;
+  color:var(--gold);
+  background:rgba(255,215,0,0.08);border:1px solid rgba(255,215,0,0.15);
+  border-radius:20px;padding:3px 10px;margin-bottom:8px;
+}
+.qr-phone{font-size:18px;font-weight:900;color:var(--text);letter-spacing:0.05em;margin-bottom:2px;}
+.qr-owner{font-size:11px;color:var(--muted);margin-bottom:10px;}
+.qr-pill{
+  display:inline-flex;align-items:baseline;gap:4px;
+  background:rgba(255,215,0,0.08);border:1px solid rgba(255,215,0,0.15);
+  border-radius:8px;padding:5px 10px;
+}
+.qr-pill-label{font-size:10px;color:var(--muted);}
+.qr-pill-val{font-size:19px;font-weight:900;color:var(--gold);}
+.qr-hint{
+  margin:0 14px 10px;padding:8px 12px;
+  background:rgba(34,197,94,0.05);border:1px solid rgba(34,197,94,0.1);
+  border-radius:8px;font-size:11px;color:rgba(34,197,94,0.7);
+  display:flex;align-items:center;gap:6px;
+}
+
+/* ── SAUCE & VEG ── */
+.pref-block{
+  margin:0 14px 10px;
+  background:rgba(22,18,13,0.85);
+  border:1px solid rgba(255,255,255,0.06);
+  border-radius:14px;overflow:hidden;
+  backdrop-filter:blur(12px);
+}
+.pref-row{display:flex;align-items:flex-start;gap:12px;padding:12px 16px;border-bottom:1px solid rgba(255,255,255,0.04);}
+.pref-row:last-child{border-bottom:none;}
+.pref-row-label{
+  font-size:10px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;
+  color:var(--muted);min-width:32px;padding-top:7px;
+}
+.sauce-grid{display:flex;flex-wrap:wrap;gap:5px;flex:1;}
 .sauce-chk{display:flex;align-items:center;cursor:pointer;}
 .sauce-chk input[type=checkbox]{display:none;}
 .sauce-chk span{
-  display:flex;align-items:center;gap:5px;padding:6px 9px;width:100%;
-  border-radius:10px;font-size:11px;font-weight:600;
-  border:1.5px solid rgba(46,32,24,0.7);color:var(--muted);
-  transition:all 0.2s;cursor:pointer;user-select:none;
-  background:rgba(255,255,255,0.02);
+  display:flex;align-items:center;gap:4px;
+  padding:5px 10px;border-radius:20px;
+  font-size:11px;font-weight:700;
+  border:1.5px solid rgba(255,255,255,0.07);color:var(--muted);
+  background:rgba(255,255,255,0.03);
+  transition:all 0.18s;cursor:pointer;user-select:none;white-space:nowrap;
 }
 .sauce-chk input[type=checkbox]:checked + span{
-  border-color:var(--fire2);color:var(--fire2);background:rgba(255,170,0,0.12);
+  border-color:var(--fire2);color:var(--fire2);background:rgba(255,170,0,0.1);
 }
-.veg-options{display:flex;gap:8px;flex:1;}
-.veg-opt{display:flex;align-items:center;gap:4px;cursor:pointer;}
+.veg-options{display:flex;gap:6px;flex:1;}
+.veg-opt{display:flex;align-items:center;cursor:pointer;}
 .veg-opt input[type=radio]{display:none;}
 .veg-opt span{
-  padding:5px 14px;border-radius:20px;font-size:12px;font-weight:700;
-  border:1.5px solid rgba(46,32,24,0.7);color:var(--muted);
-  transition:all 0.2s;cursor:pointer;user-select:none;
+  padding:5px 14px;border-radius:20px;
+  font-size:11px;font-weight:700;
+  border:1.5px solid rgba(255,255,255,0.07);color:var(--muted);
+  transition:all 0.18s;cursor:pointer;user-select:none;
 }
-.veg-opt input[type=radio]:checked + span{border-color:var(--green);color:var(--green);background:rgba(34,197,94,0.1);}
-.msi-note{font-size:11px;color:var(--green);margin-top:10px;font-weight:600;display:flex;align-items:center;gap:4px;}
+.veg-opt input[type=radio]:checked + span{border-color:var(--green);color:var(--green);background:rgba(34,197,94,0.08);}
+.pref-note{
+  margin:0 14px 10px;padding:7px 12px;
+  background:rgba(34,197,94,0.04);border:1px solid rgba(34,197,94,0.1);
+  border-radius:8px;font-size:11px;color:rgba(34,197,94,0.65);
+  display:flex;align-items:center;gap:5px;
+}
 
-/* Delivery Form */
-.delivery-section{
-  margin:0 16px 8px;
-  background:rgba(28,24,18,0.7);
-  border:1px solid rgba(46,32,24,0.7);
-  border-radius:16px;overflow:hidden;
-  backdrop-filter:blur(8px);
+/* ── DELIVERY FORM ── */
+.addr-block{
+  margin:0 14px 10px;
+  background:rgba(22,18,13,0.85);
+  border:1px solid rgba(255,255,255,0.06);
+  border-radius:14px;overflow:hidden;
+  backdrop-filter:blur(12px);
 }
-.ds-header{padding:11px 16px;background:rgba(34,197,94,0.07);border-bottom:1px solid rgba(46,32,24,0.6);font-size:12px;font-weight:700;color:var(--green);letter-spacing:0.04em;display:flex;align-items:center;gap:6px;}
-.ds-body{padding:14px 16px;}
-.field-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;}
+.addr-body{padding:14px 16px;display:flex;flex-direction:column;gap:10px;}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
 .field-wrap{display:flex;flex-direction:column;gap:5px;}
-.field-label{font-size:10px;font-weight:700;letter-spacing:0.06em;color:var(--muted);text-transform:uppercase;}
-.field-required{color:#e74c3c;margin-left:2px;}
+.field-label{
+  font-size:10px;font-weight:800;letter-spacing:0.07em;
+  color:var(--muted);text-transform:uppercase;
+  display:flex;align-items:center;gap:3px;
+}
+.field-required{color:#e74c3c;}
 .field-input{
-  padding:12px 14px;
-  background:rgba(14,12,10,0.8);
-  border:1px solid rgba(46,32,24,0.7);
+  padding:11px 13px;
+  background:rgba(10,8,6,0.7);
+  border:1.5px solid rgba(255,255,255,0.07);
   border-radius:10px;color:var(--text);font-family:inherit;font-size:14px;
   transition:border-color 0.2s,box-shadow 0.2s;
-  backdrop-filter:blur(4px);
 }
-.field-input::placeholder{color:#4a3020;}
-.field-input:focus{outline:none;border-color:rgba(255,85,0,0.5);box-shadow:0 0 0 3px rgba(255,85,0,0.08);}
-.field-input.err{border-color:rgba(231,76,60,0.7);}
+.field-input::placeholder{color:#3a2810;}
+.field-input:focus{outline:none;border-color:rgba(255,120,0,0.4);box-shadow:0 0 0 3px rgba(255,85,0,0.07);}
+.field-input.err{border-color:rgba(231,76,60,0.6);}
 .field-err{font-size:10px;color:#e74c3c;margin-top:2px;display:none;}
 .field-input.err ~ .field-err{display:block;}
-
-/* ═══════════════════════════════════════
-   PROMPTPAY QR SECTION
-═══════════════════════════════════════ */
-.qr-section{
-  margin:0 16px 8px;
-  background:rgba(28,24,18,0.7);
-  border:1px solid rgba(255,215,0,0.2);
-  border-radius:16px;overflow:hidden;
-  backdrop-filter:blur(8px);
+.addr-hint{
+  margin:0 14px 14px;padding:7px 12px;
+  background:rgba(255,85,0,0.04);border:1px solid rgba(255,85,0,0.1);
+  border-radius:8px;font-size:11px;color:rgba(255,170,0,0.6);
+  display:flex;align-items:center;gap:5px;
 }
-.qr-header{
-  padding:11px 16px;background:rgba(255,215,0,0.08);
-  border-bottom:1px solid rgba(255,215,0,0.15);
-  font-size:12px;font-weight:700;color:var(--gold);
-  letter-spacing:0.04em;display:flex;align-items:center;gap:6px;
-}
-.qr-body{padding:16px;display:flex;gap:16px;align-items:center;}
-.qr-frame{
-  flex-shrink:0;
-  width:110px;height:110px;border-radius:14px;
-  background:white;
-  display:flex;align-items:center;justify-content:center;
-  padding:6px;
-  box-shadow:0 4px 20px rgba(0,0,0,0.4);
-  position:relative;overflow:hidden;
-}
-.qr-frame canvas{width:100%;height:100%;image-rendering:pixelated;}
-.qr-info{flex:1;}
-.qr-title{font-size:14px;font-weight:700;color:var(--gold);margin-bottom:4px;}
-.qr-number{font-size:16px;font-weight:900;color:var(--text);letter-spacing:0.05em;margin-bottom:6px;}
-.qr-name{font-size:12px;color:var(--muted);margin-bottom:10px;}
-.qr-amount{
-  display:inline-flex;align-items:baseline;gap:4px;
-  background:rgba(255,215,0,0.1);border:1px solid rgba(255,215,0,0.2);
-  border-radius:8px;padding:6px 12px;
-}
-.qr-amount-label{font-size:11px;color:var(--muted);}
-.qr-amount-val{font-size:20px;font-weight:900;color:var(--gold);}
-.qr-note{margin-top:10px;font-size:11px;color:var(--muted);display:flex;align-items:center;gap:4px;}
 
 /* Modal Footer */
 .modal-foot{padding:12px 20px 24px;border-top:1px solid rgba(46,32,24,0.5);flex-shrink:0;display:flex;flex-direction:column;gap:8px;}
@@ -972,50 +1052,73 @@ function renderModal(){
 
   /* Summary */
   const tSmall = cart.filter(c=>c.price===7).reduce((s,c)=>s+c.qty,0);
-  const summaryItems = cart.map(c=>{
+  const orderId = genOrderId();
+
+  const summaryRows = cart.map((c,i)=>{
+    const sizeTag = c.price===7
+      ? `<span class="rcp-tag size-small">เล็ก</span>`
+      : `<span class="rcp-tag size-jumbo">จัมโบ้</span>`;
     const promoTag = (c.price===7 && tSmall>=3)
-      ? `<span class="os-promo-tag">รวมโปร</span>` : "";
-    return `<div class="os-item">
-      <div class="os-item-left">
-        <div class="os-item-name">${c.name}${promoTag}</div>
-        <div class="os-item-detail">${c.sauce} · ${c.veg} · จำนวน ${c.qty} ชิ้น</div>
+      ? `<span class="rcp-tag promo">โปร 3×20</span>` : "";
+    return `<div class="rcp-row">
+      <div class="rcp-num">${i+1}</div>
+      <div class="rcp-body">
+        <div class="rcp-name">${c.name}</div>
+        <div class="rcp-meta">${sizeTag}${promoTag}<span class="rcp-tag">×${c.qty}</span></div>
       </div>
-      <div class="os-item-price">฿${itemTotal(c)}</div>
+      <div class="rcp-right">
+        <div class="rcp-price">฿${itemTotal(c)}</div>
+        <button class="ci-del" onclick="cartDel(${i})" title="ลบ">🗑</button>
+      </div>
     </div>`;
-  }).join("");
+  }).join('<hr class="rcp-dots">');
+
   const summaryHTML = `
-  <div class="section-divider"><span>สรุปรายการ</span></div>
-  <div class="order-summary">
-    <div class="os-header">🧾 รายการสั่งซื้อ <span class="count-chip">${count} ชิ้น</span></div>
-    ${summaryItems}
-    <div class="os-total-row">
-      <div><div class="os-total-label">ยอดรวมทั้งหมด</div><div class="os-total-note">รวมโปร 3 ชิ้น 20 บาทแล้ว</div></div>
-      <div class="os-total-amount">฿${total}</div>
+  <div class="sec-label">
+    <div class="sec-label-icon orange">🧾</div>
+    <div class="sec-label-text orange">รายการสั่งซื้อ</div>
+    <div class="sec-label-line"></div>
+    <span class="count-chip">${count} ชิ้น</span>
+  </div>
+  <div class="pro-block">
+    <div class="receipt-head">
+      <div class="receipt-id">ORDER <span>${orderId}</span></div>
+    </div>
+    ${summaryRows}
+    <div class="rcp-total">
+      <div class="rcp-total-left">
+        <div class="rcp-total-label">ยอดรวมทั้งหมด</div>
+        <div class="rcp-total-note">✅ รวมโปร 3 ชิ้น 20 บาทแล้ว</div>
+      </div>
+      <div class="rcp-total-amount">฿${total}</div>
     </div>
   </div>`;
 
   /* PromptPay QR */
   const qrURL = buildPromptPayQR(PROMPTPAY_NUMBER, total);
   const qrHTML = `
-  <div class="section-divider"><span>ชำระเงิน</span></div>
-  <div class="qr-section">
-    <div class="qr-header">💳 QR PromptPay — สแกนจ่ายได้เลย</div>
-    <div class="qr-body">
+  <div class="sec-label">
+    <div class="sec-label-icon gold">💳</div>
+    <div class="sec-label-text gold">ชำระเงิน</div>
+    <div class="sec-label-line"></div>
+  </div>
+  <div class="qr-card">
+    <div class="qr-inner">
       <div class="qr-frame">
-        <img src="${qrURL}" width="98" height="98" alt="QR PromptPay" style="image-rendering:pixelated;border-radius:6px;">
+        <img src="${qrURL}" alt="QR PromptPay">
       </div>
-      <div class="qr-info">
-        <div class="qr-title">📱 พร้อมเพย์</div>
-        <div class="qr-number">${PROMPTPAY_NUMBER}</div>
-        <div class="qr-name">สโมกกี้ไบร์ท</div>
-        <div class="qr-amount">
-          <span class="qr-amount-label">ยอด</span>
-          <span class="qr-amount-val">฿${total}</span>
+      <div class="qr-details">
+        <div class="qr-badge">📱 PromptPay</div>
+        <div class="qr-phone">${PROMPTPAY_NUMBER}</div>
+        <div class="qr-owner">สโมกกี้ไบร์ท</div>
+        <div class="qr-pill">
+          <span class="qr-pill-label">ยอดชำระ&nbsp;</span>
+          <span class="qr-pill-val">฿${total}</span>
         </div>
-        <div class="qr-note">📌 สแกนด้วยแอปธนาคารใดก็ได้</div>
       </div>
     </div>
-  </div>`;
+  </div>
+  <div class="qr-hint">📌 สแกนด้วยแอปธนาคารหรือ Mobile Banking ได้เลยครับ</div>`;
 
   /* Sauce & Veg */
   const sauceVals  = ["ซอสรวม","มายองเนส","มะเขือเทศ","ซอสพริก","ไม่รับซอส"];
@@ -1026,30 +1129,35 @@ function renderModal(){
     return `<label class="sauce-chk"><input type="checkbox" name="gsauce" value="${sv}" ${chk} onchange="handleGlobalSauceChange(this)"><span>${sauceIcons[sv]} ${sv}</span></label>`;
   }).join("");
   const sauceVegHTML = `
-  <div class="section-divider"><span>เลือกซอส & ผัก</span></div>
-  <div class="modal-sauce-section">
-    <div class="modal-sauce-item">
-      <div class="msi-row">
-        <div class="msi-label">ซอส</div>
-        <div class="sauce-grid">${sauceBoxes}</div>
-      </div>
-      <div class="msi-row" style="margin-top:10px">
-        <div class="msi-label">ผัก</div>
-        <div class="veg-options">
-          <label class="veg-opt"><input type="radio" name="gveg" value="🥬 ใส่ผัก" ${globalVeg==="🥬 ใส่ผัก"?"checked":""} onchange="globalVeg=this.value;savePrefs()"><span>🥬 ใส่ผัก</span></label>
-          <label class="veg-opt"><input type="radio" name="gveg" value="🚫 ไม่ผัก" ${globalVeg==="🚫 ไม่ผัก"?"checked":""} onchange="globalVeg=this.value;savePrefs()"><span>🚫 ไม่ผัก</span></label>
-        </div>
-      </div>
-      <div class="msi-note">✅ ใช้กับทุกเมนูในออเดอร์นี้</div>
+  <div class="sec-label">
+    <div class="sec-label-icon orange">🥫</div>
+    <div class="sec-label-text orange">ซอส & ผัก</div>
+    <div class="sec-label-line"></div>
+  </div>
+  <div class="pref-block">
+    <div class="pref-row">
+      <div class="pref-row-label">ซอส</div>
+      <div class="sauce-grid">${sauceBoxes}</div>
     </div>
-  </div>`;
+    <div class="pref-row">
+      <div class="pref-row-label">ผัก</div>
+      <div class="veg-options">
+        <label class="veg-opt"><input type="radio" name="gveg" value="🥬 ใส่ผัก" ${globalVeg==="🥬 ใส่ผัก"?"checked":""} onchange="globalVeg=this.value;savePrefs()"><span>🥬 ใส่ผัก</span></label>
+        <label class="veg-opt"><input type="radio" name="gveg" value="🚫 ไม่ผัก" ${globalVeg==="🚫 ไม่ผัก"?"checked":""} onchange="globalVeg=this.value;savePrefs()"><span>🚫 ไม่ผัก</span></label>
+      </div>
+    </div>
+  </div>
+  <div class="pref-note">✅ ซอสและผักจะใช้กับทุกรายการในออเดอร์นี้</div>`;
 
   /* Delivery */
   const formHTML = `
-  <div class="section-divider"><span>ที่อยู่จัดส่ง</span></div>
-  <div class="delivery-section">
-    <div class="ds-header">📍 ระบุที่อยู่จัดส่ง</div>
-    <div class="ds-body">
+  <div class="sec-label">
+    <div class="sec-label-icon green">📍</div>
+    <div class="sec-label-text green">ที่อยู่จัดส่ง</div>
+    <div class="sec-label-line"></div>
+  </div>
+  <div class="addr-block">
+    <div class="addr-body">
       <div class="field-row">
         <div class="field-wrap">
           <label class="field-label">บ้านเลขที่<span class="field-required">*</span></label>
@@ -1062,7 +1170,8 @@ function renderModal(){
         </div>
       </div>
     </div>
-  </div>`;
+  </div>
+  <div class="addr-hint">🛵 ส่งถึงบ้านในหมู่บ้าน 159/306 เท่านั้นครับ</div>`;
 
   body.innerHTML = itemsHTML + summaryHTML + qrHTML + sauceVegHTML + formHTML;
 
