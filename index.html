@@ -1109,7 +1109,7 @@ function genOrderId(){
 }
 
 /* ══════════════════════════════════════
-   sendToLine — ตารางกระชับ มืออาชีพ
+   sendToLine — สวยงาม อ่านง่าย ไม่มีตาราง
 ══════════════════════════════════════ */
 function sendToLine(){
   if(!cart.length) return;
@@ -1124,54 +1124,52 @@ function sendToLine(){
   const orderId = genOrderId();
   const tSmall  = cart.filter(c=>c.price===7).reduce((s,c)=>s+c.qty,0);
 
-  // ── ฟังก์ชัน pad สำหรับจัดตาราง ──
-  const padR = (s,w) => { const str=String(s); return str.length>=w ? str.slice(0,w) : str+' '.repeat(w-str.length); };
-  const padL = (s,w) => { const str=String(s); return str.length>=w ? str.slice(0,w) : ' '.repeat(w-str.length)+str; };
+  const D  = "━━━━━━━━━━━━━━━━━━━━━━━━━━━━";
+  const d  = "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄";
 
-  // ── header ตาราง ──
-  const TL = "┌──┬────────────────────┬──────┬───┬───────┐";
-  const TH = "│ #│ รายการ             │ ขนาด │ × │ ราคา  │";
-  const TM = "├──┼────────────────────┼──────┼───┼───────┤";
-  const TB = "└──┴────────────────────┴──────┴───┴───────┘";
-
-  const rows = cart.map((c,i)=>{
-    const no   = padL(i+1, 2);
-    const nm   = padR(c.name, 19);
-    const sz   = c.price===7 ? "เล็ก  " : "จัมโบ้";
-    const qty  = padL(c.qty, 2);
-    const pr   = padL("฿"+itemTotal(c), 6);
-    return `│${no}│ ${nm}│ ${sz} │${qty} │ ${pr}  │`;
-  }).join("\n");
+  // ── รายการสินค้า แต่ละชิ้น ──
+  const itemLines = cart.map((c,i)=>{
+    const sizeEmoji = c.price===7 ? "🔸" : "🔹";
+    const sizeLabel = c.price===7 ? "ชิ้นเล็ก" : "จัมโบ้";
+    const pr = itemTotal(c);
+    return `${i+1}. ${c.name}\n   ${sizeEmoji} ${sizeLabel}  ×${c.qty} ชิ้น  →  ฿${pr}`;
+  }).join("\n"+d+"\n");
 
   // ── โปรชิ้นเล็ก ──
-  let promoLine = "";
+  let promoBlock = "";
   if(tSmall >= 3){
-    const sets = Math.floor(tSmall/3);
-    const rem  = tSmall % 3;
-    promoLine  = `\n🎉 โปร: ${tSmall} ชิ้นเล็ก = ${sets}×20`+(rem?`+${rem}×7`:"")+` บาท`;
+    const sets   = Math.floor(tSmall/3);
+    const rem    = tSmall % 3;
+    const saving = tSmall*7 - calcPooledSmall();
+    promoBlock =
+`\n${D}
+🎉 โปรชิ้นเล็ก ${tSmall} ชิ้น
+   ${sets} ชุด ×20 บาท`+(rem ? `  +  ${rem} ชิ้น ×7 บาท` : "")+`
+   ✅ ประหยัดไป ฿${saving} บาท`;
   }
 
-  const D = "━━━━━━━━━━━━━━━━━━━━━━━━━━━━";
-
   const msg =
-`🔥 สโมกกี้ไบร์ท  ${orderId}
+`🔥 สโมกกี้ไบร์ท  •  ${orderId}
 ${D}
-📅 ${date}  🕐 ${time}
-📍 ${addr}
+🗓  ${date}
+⏰  ${time} น.
+🏠  ${addr}
 ${D}
-${TL}
-${TH}
-${TM}
-${rows}
-${TB}${promoLine}
+🍢 รายการที่สั่ง  (${count} ชิ้น)
 ${D}
-🥫 ซอส  : ${globalSauce}
-🥬 ผัก   : ${globalVeg}
-💰 ยอดรวม : ฿${total} บาท
-💳 PromptPay : ${PROMPTPAY_NUMBER}
+${itemLines}${promoBlock}
 ${D}
-🙏 ขอบคุณที่อุดหนุนสโมกกี้ไบร์ทครับ
-👉 https://ta-chalom-computer.github.io/smoky-bite/`;
+🥫 ซอส    :  ${globalSauce}
+🥬 ผัก     :  ${globalVeg}
+${D}
+💰 ยอดรวมทั้งหมด  ➜  ฿${total} บาท
+${D}
+💳 ชำระเงินผ่าน PromptPay
+   📱 ${PROMPTPAY_NUMBER}  (สโมกกี้ไบร์ท)
+   👉 โอนแล้วแจ้งสลิปด้วยนะครับ 🙏
+${D}
+😊 ขอบคุณที่อุดหนุนสโมกกี้ไบร์ทครับ
+🛒 https://ta-chalom-computer.github.io/smoky-bite/`;
 
   window.open("https://line.me/R/msg/text/?"+encodeURIComponent(msg),"_blank");
   showSuccess();
