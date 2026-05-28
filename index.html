@@ -6,9 +6,6 @@
 <title>สโมกกี้ไบร์ท 🔥</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 <style>
-/* ═══════════════════════════════════════
-   CSS VARIABLES & RESET
-═══════════════════════════════════════ */
 :root{
   --fire:#ff5500;--fire2:#ffaa00;--gold:#ffd700;
   --dark:#0d0a08;--dark2:#1a1208;--card:#1e1610;
@@ -25,10 +22,6 @@ body{
   font-family:"Noto Sans Thai",sans-serif;
   min-height:100vh;overflow-x:hidden;
 }
-
-/* ═══════════════════════════════════════
-   LOADING SCREEN
-═══════════════════════════════════════ */
 #loadingScreen{
   position:fixed;inset:0;z-index:9999;
   background:var(--dark);
@@ -52,10 +45,6 @@ body{
 @keyframes loadBar{0%{width:0%}60%{width:80%}100%{width:100%}}
 .ls-sub{font-size:13px;color:var(--muted);animation:fadeInUp 0.5s ease 0.6s both;}
 @keyframes fadeInUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
-
-/* ═══════════════════════════════════════
-   AMBIENT BACKGROUND
-═══════════════════════════════════════ */
 body::before{
   content:"";position:fixed;inset:0;
   background:
@@ -64,16 +53,11 @@ body::before{
     radial-gradient(ellipse 30% 30% at 90% 30%,rgba(255,60,0,0.07) 0%,transparent 50%);
   pointer-events:none;z-index:0;
 }
-/* Noise texture overlay */
 body::after{
   content:"";position:fixed;inset:0;
   background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
   pointer-events:none;z-index:0;opacity:0.4;
 }
-
-/* ═══════════════════════════════════════
-   HEADER
-═══════════════════════════════════════ */
 .header{
   position:relative;z-index:1;text-align:center;padding:60px 20px 32px;
   animation:fadeInDown 0.8s cubic-bezier(.22,.8,.25,1) 2.3s both;
@@ -94,10 +78,6 @@ body::after{
   -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
 }
 .header-sub{margin-top:10px;color:var(--muted);font-size:14px;}
-
-/* ═══════════════════════════════════════
-   PROMO BAR
-═══════════════════════════════════════ */
 .promo-bar{
   position:relative;z-index:1;
   display:flex;gap:12px;justify-content:center;flex-wrap:wrap;padding:0 20px 28px;
@@ -115,10 +95,6 @@ body::after{
 .badge:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(34,197,94,0.25);}
 .badge .price{color:var(--gold);font-size:20px;font-weight:900;}
 .badge .ptag{background:#c0392b;color:white;border-radius:5px;padding:2px 7px;font-size:12px;}
-
-/* ═══════════════════════════════════════
-   FLOATING CART BAR — GLASS UI
-═══════════════════════════════════════ */
 .cart-bar{
   position:sticky;top:0;z-index:100;
   background:var(--glass-bg);
@@ -160,10 +136,6 @@ body::after{
 }
 .btn-checkout:hover:not(:disabled){opacity:0.88;transform:scale(0.97);box-shadow:0 6px 24px rgba(255,85,0,0.5);}
 .btn-checkout:disabled{opacity:0.3;cursor:default;}
-
-/* ═══════════════════════════════════════
-   SECTION TITLES
-═══════════════════════════════════════ */
 .section-title{
   position:relative;z-index:1;text-align:center;
   padding:8px 20px 20px;
@@ -174,10 +146,6 @@ body::after{
   background:linear-gradient(90deg,var(--fire),var(--gold));
   border-radius:2px;margin:8px auto 0;
 }
-
-/* ═══════════════════════════════════════
-   PRICE TABLE
-═══════════════════════════════════════ */
 .price-table-wrap{position:relative;z-index:1;max-width:680px;margin:0 auto 40px;padding:0 14px;}
 .price-table{
   width:100%;border-collapse:collapse;
@@ -198,14 +166,9 @@ body::after{
 .size-col{color:var(--muted);font-size:11px;}
 .tfoot-row{background:linear-gradient(90deg,rgba(26,42,16,0.8),rgba(34,51,24,0.8));}
 .tfoot-row td{color:var(--green);font-weight:700;font-size:12px;padding:11px 14px;}
-
-/* ═══════════════════════════════════════
-   PRODUCT CARDS — GLASS UI
-═══════════════════════════════════════ */
 .container{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:0 14px 140px;}
 .grid-5{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px;margin-bottom:36px;}
 .grid-4{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:14px;}
-
 .card{
   background:var(--glass-bg);
   border:1px solid var(--glass-border);
@@ -272,10 +235,6 @@ body::after{
 .btn-add:hover{opacity:0.87;transform:scale(0.98);box-shadow:0 6px 20px rgba(255,85,0,0.45);}
 .btn-add:active{transform:scale(0.95);}
 .btn-add.added{background:linear-gradient(135deg,#22c55e,#16a34a);box-shadow:0 4px 14px rgba(34,197,94,0.35);}
-
-/* ═══════════════════════════════════════
-   FLOATING CART BUTTON
-═══════════════════════════════════════ */
 .float-cart{
   position:fixed;right:18px;bottom:100px;z-index:200;
   width:60px;height:60px;border-radius:50%;
@@ -310,10 +269,6 @@ body::after{
 }
 .line-fab:hover{transform:scale(1.1);}
 @keyframes pulse-g{0%,100%{box-shadow:0 5px 18px rgba(6,199,85,0.45)}50%{box-shadow:0 5px 30px rgba(6,199,85,0.75)}}
-
-/* ═══════════════════════════════════════
-   TOAST
-═══════════════════════════════════════ */
 .toast{
   position:fixed;top:20px;left:50%;
   transform:translateX(-50%) translateY(-90px);
@@ -325,10 +280,6 @@ body::after{
   box-shadow:0 8px 24px rgba(255,85,0,0.4);
 }
 .toast.show{transform:translateX(-50%) translateY(0);}
-
-/* ═══════════════════════════════════════
-   MODAL — GLASS BOTTOM SHEET
-═══════════════════════════════════════ */
 .modal-bg{
   display:none;position:fixed;inset:0;
   background:rgba(0,0,0,0.78);
@@ -374,8 +325,6 @@ body::after{
 .modal-body{overflow-y:auto;flex:1;padding:0;}
 .modal-body::-webkit-scrollbar{width:3px;}
 .modal-body::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
-
-/* Cart Items */
 .cart-items-section{padding:16px 24px 8px;}
 .cart-item{
   display:flex;align-items:center;gap:14px;padding:14px 0;
@@ -412,8 +361,6 @@ body::after{
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
 .cart-empty-text{font-size:16px;color:var(--muted);font-weight:700;}
 .cart-empty-sub{font-size:12px;color:#6a5040;}
-
-/* ── Section Label ── */
 .sec-label{
   display:flex;align-items:center;gap:8px;
   padding:16px 20px 8px;
@@ -431,8 +378,6 @@ body::after{
 .sec-label-text.gold{color:var(--gold);}
 .sec-label-text.green{color:var(--green);}
 .sec-label-line{flex:1;height:1px;background:rgba(255,255,255,0.06);}
-
-/* ── Block wrapper shared ── */
 .pro-block{
   margin:0 14px 10px;
   background:rgba(22,18,13,0.85);
@@ -440,8 +385,6 @@ body::after{
   border-radius:14px;overflow:hidden;
   backdrop-filter:blur(12px);
 }
-
-/* ── ORDER RECEIPT ── */
 .receipt-head{
   padding:14px 16px 12px;
   display:flex;align-items:center;justify-content:space-between;
@@ -455,8 +398,6 @@ body::after{
   border:1px solid rgba(255,85,0,0.2);
   border-radius:20px;padding:3px 10px;font-size:11px;font-weight:700;
 }
-
-/* receipt rows */
 .rcp-row{
   display:flex;align-items:center;
   padding:11px 16px;
@@ -489,27 +430,16 @@ body::after{
 .rcp-right{display:flex;flex-direction:column;align-items:flex-end;gap:2px;flex-shrink:0;}
 .rcp-price{font-size:15px;font-weight:900;color:var(--gold);}
 .rcp-unit{font-size:10px;color:var(--muted);}
-
-/* dotted separator */
-.rcp-dots{
-  margin:0 16px;
-  border:none;
-  border-top:1px dashed rgba(255,255,255,0.07);
-}
-
-/* total bar */
+.rcp-dots{margin:0 16px;border:none;border-top:1px dashed rgba(255,255,255,0.07);}
 .rcp-total{
   display:flex;align-items:center;justify-content:space-between;
   padding:14px 16px;
   background:linear-gradient(135deg,rgba(255,85,0,0.07),rgba(255,170,0,0.05));
   border-top:1px solid rgba(255,85,0,0.15);
 }
-.rcp-total-left{}
 .rcp-total-label{font-size:11px;color:var(--muted);font-weight:600;margin-bottom:2px;}
 .rcp-total-note{font-size:10px;color:rgba(34,197,94,0.7);display:flex;align-items:center;gap:4px;}
 .rcp-total-amount{font-size:30px;font-weight:900;color:var(--gold);letter-spacing:-0.5px;}
-
-/* ── PROMPTPAY QR ── */
 .qr-card{
   margin:0 14px 10px;
   background:rgba(22,18,13,0.85);
@@ -548,8 +478,6 @@ body::after{
   border-radius:8px;font-size:11px;color:rgba(34,197,94,0.7);
   display:flex;align-items:center;gap:6px;
 }
-
-/* ── SAUCE & VEG ── */
 .pref-block{
   margin:0 14px 10px;
   background:rgba(22,18,13,0.85);
@@ -593,8 +521,6 @@ body::after{
   border-radius:8px;font-size:11px;color:rgba(34,197,94,0.65);
   display:flex;align-items:center;gap:5px;
 }
-
-/* ── DELIVERY FORM ── */
 .addr-block{
   margin:0 14px 10px;
   background:rgba(22,18,13,0.85);
@@ -629,8 +555,6 @@ body::after{
   border-radius:8px;font-size:11px;color:rgba(255,170,0,0.6);
   display:flex;align-items:center;gap:5px;
 }
-
-/* Modal Footer */
 .modal-foot{padding:12px 20px 24px;border-top:1px solid rgba(46,32,24,0.5);flex-shrink:0;display:flex;flex-direction:column;gap:8px;}
 .btn-line{
   width:100%;padding:15px;border:none;border-radius:14px;
@@ -644,8 +568,6 @@ body::after{
 .btn-line:hover{opacity:0.9;transform:scale(0.99);}
 .btn-line:active{transform:scale(0.97);}
 .btn-line-sub{font-size:11px;opacity:0.75;font-weight:400;display:block;margin-top:2px;}
-
-/* Success Screen */
 .success-screen{
   display:flex;flex-direction:column;align-items:center;justify-content:center;
   padding:48px 24px 32px;text-align:center;gap:0;min-height:300px;
@@ -668,16 +590,10 @@ body::after{
 }
 .success-bar-wrap{width:120px;height:3px;background:rgba(255,255,255,0.08);border-radius:3px;overflow:hidden;}
 .success-bar{height:100%;background:linear-gradient(90deg,var(--green),var(--fire2));border-radius:3px;width:100%;}
-
-/* Footer */
 .footer{position:relative;z-index:1;text-align:center;padding:20px;border-top:1px solid rgba(42,26,12,0.8);color:var(--muted);font-size:12px;}
 .footer a{color:var(--fire2);text-decoration:none;}
 .contact-row{display:flex;justify-content:center;gap:20px;flex-wrap:wrap;margin:8px 0;}
 .contact-row span{font-size:14px;color:var(--text);font-weight:600;}
-
-/* ═══════════════════════════════════════
-   RESPONSIVE
-═══════════════════════════════════════ */
 @media(max-width:600px){
   .grid-5,.grid-4{grid-template-columns:repeat(2,1fr);}
   .cart-summary{display:none;}
@@ -694,7 +610,6 @@ body::after{
 </head>
 <body>
 
-<!-- ══ LOADING SCREEN ══ -->
 <div id="loadingScreen">
   <div class="ls-flame">🔥</div>
   <div class="ls-title">สโมกกี้ไบร์ท</div>
@@ -702,20 +617,17 @@ body::after{
   <div class="ls-sub">กำลังโหลดเมนูอร่อยๆ...</div>
 </div>
 
-<!-- ══ HEADER ══ -->
 <div class="header">
   <span class="flame">🔥</span>
   <h1>สโมกกี้ไบร์ท<span>ของแทร๊!! 🍢</span></h1>
   <p class="header-sub">พร้อมเสิร์ฟความอร่อยครับ • ส่งไวถึงหน้าบ้าน</p>
 </div>
 
-<!-- ══ PROMO ══ -->
 <div class="promo-bar">
   <div class="badge"><span>✅</span><span>ชิ้นเล็ก <span class="price">7</span> บาท</span><span class="ptag">3 ชิ้น 20.-</span></div>
   <div class="badge"><span>✅</span><span>ไซส์จัมโบ้ <span class="price">10</span> บาท</span></div>
 </div>
 
-<!-- ══ GLASS STICKY CART BAR ══ -->
 <div class="cart-bar" id="cartBar">
   <div class="cart-info">
     <div class="cart-icon-wrap" onclick="openCart()">
@@ -728,7 +640,6 @@ body::after{
   <button class="btn-checkout" id="btnCheckout" onclick="openCart()" disabled>ดูตะกร้า</button>
 </div>
 
-<!-- ══ PRICE TABLE ══ -->
 <div class="section-title">📋 ตารางราคาทั้งหมด</div>
 <div class="price-table-wrap">
   <table class="price-table">
@@ -749,7 +660,6 @@ body::after{
   </table>
 </div>
 
-<!-- ══ MENUS ══ -->
 <div class="section-title">🍢 ไซส์เล็ก — 7 บาท (3 ชิ้น 20 บาท)</div>
 <div class="container">
   <div class="grid-5" id="grid-small"></div>
@@ -757,7 +667,6 @@ body::after{
   <div class="grid-4" id="grid-jumbo"></div>
 </div>
 
-<!-- ══ FOOTER ══ -->
 <div class="footer">
   <div class="contact-row">
     <span>🏠 บ้านเลขที่ 159/306</span>
@@ -766,17 +675,14 @@ body::after{
   © 2026 สโมกกี้ไบร์ท | สั่งง่าย ส่งไว ถึงบ้านครับ
 </div>
 
-<!-- ══ FABs ══ -->
 <button class="float-cart" id="floatCart" onclick="openCart()">
   🛒
   <span class="float-cart-count" id="floatCartCount" style="display:none"></span>
 </button>
 <a class="line-fab" href="https://line.me/ti/p/~SARUN_2018" target="_blank" title="ติดต่อผ่าน LINE">💬</a>
 
-<!-- ══ TOAST ══ -->
 <div class="toast" id="toast"></div>
 
-<!-- ══ CART MODAL ══ -->
 <div class="modal-bg" id="modalBg" onclick="closeCartOutside(event)">
   <div class="modal">
     <div class="modal-handle"></div>
@@ -800,22 +706,10 @@ body::after{
   </div>
 </div>
 
-<!-- ══ SIMPLE QR LIBRARY ══ -->
 <script>
-/* Tiny QR encoder — used for PromptPay QR */
-/* We'll generate via api.qrserver.com as img */
-</script>
+const PROMPTPAY_NUMBER = "0821088428";
+const LINE_ID = "SARUN_2018";
 
-<script>
-/* ════════════════════════════════════
-   CONFIG
-════════════════════════════════════ */
-const PROMPTPAY_NUMBER = "0821088428"; // เบอร์ PromptPay ของร้าน
-const LINE_ID = "SARUN_2018";         // LINE ID ของร้าน
-
-/* ════════════════════════════════════
-   DATA
-════════════════════════════════════ */
 const IMG={
   s1:"https://i.ibb.co/1Y4fr8Pm/1.jpg",
   s2:"https://i.ibb.co/GQkb6htw/2.jpg",
@@ -843,9 +737,6 @@ const jumboMenus=[
   {id:"j10",num:10,name:"ชิคเก้นแฟรงค์ GF",price:10},
 ];
 
-/* ════════════════════════════════════
-   STATE — Auto Save ใน localStorage
-════════════════════════════════════ */
 let cart = loadCart();
 let globalSauce = localStorage.getItem("sb_sauce") || "ซอสรวม";
 let globalVeg   = localStorage.getItem("sb_veg")   || "🥬 ใส่ผัก";
@@ -866,18 +757,12 @@ function savePrefs(){
   }catch(e){}
 }
 
-/* ════════════════════════════════════
-   LOADING SCREEN
-════════════════════════════════════ */
 window.addEventListener("load", ()=>{
   setTimeout(()=>{
     document.getElementById("loadingScreen").classList.add("hidden");
   }, 2400);
 });
 
-/* ════════════════════════════════════
-   SCROLL — sticky bar shadow + float cart
-════════════════════════════════════ */
 window.addEventListener("scroll", ()=>{
   const bar = document.getElementById("cartBar");
   const fab = document.getElementById("floatCart");
@@ -891,9 +776,6 @@ window.addEventListener("scroll", ()=>{
   }
 }, {passive:true});
 
-/* ════════════════════════════════════
-   BUILD CARDS
-════════════════════════════════════ */
 function buildCard(m, isJumbo){
   const promo = isJumbo ? "" : `<div class="card-promo">3 ชิ้น = 20 บาท 🔥</div>`;
   const best  = m.tag   ? `<div class="best-tag">${m.tag}</div>` : "";
@@ -925,24 +807,17 @@ function buildCard(m, isJumbo){
 document.getElementById("grid-small").innerHTML = smallMenus.map(m=>buildCard(m,false)).join("");
 document.getElementById("grid-jumbo").innerHTML  = jumboMenus.map(m=>buildCard(m,true)).join("");
 
-/* Restore saved cart badges */
 cart.forEach(c => {
   const b = document.getElementById("btn_"+c.id);
   if(b){ b.classList.add("added"); b.textContent="✅ ในตะกร้าแล้ว"; }
 });
 updateCartBar();
 
-/* ════════════════════════════════════
-   QTY HELPERS
-════════════════════════════════════ */
 function chgQty(id, d){
   const el = document.getElementById(id);
   el.textContent = Math.max(1, Math.min(99, parseInt(el.textContent)+d));
 }
 
-/* ════════════════════════════════════
-   CART LOGIC
-════════════════════════════════════ */
 function addToCart(id, name, price){
   const qty = parseInt(document.getElementById("qty_"+id).textContent);
   const ex  = cart.find(c=>c.id===id);
@@ -956,7 +831,6 @@ function addToCart(id, name, price){
 function flashBtn(id, name, qty){
   const b = document.getElementById("btn_"+id);
   b.classList.add("added"); b.textContent = "✅ ในตะกร้าแล้ว";
-  // Don't revert — keep green to show "in cart"
   showToast("✅ เพิ่ม "+name+" ×"+qty+" แล้ว!");
   animCartIcon();
 }
@@ -994,8 +868,6 @@ function updateCartBar(){
   const btn = document.getElementById("btnCheckout");
   btn.disabled = count === 0;
   btn.textContent = count > 0 ? "ดูตะกร้า ("+count+")" : "ดูตะกร้า";
-
-  // Float cart
   const fab = document.getElementById("floatCart");
   const fc  = document.getElementById("floatCartCount");
   if(count > 0){
@@ -1006,9 +878,6 @@ function updateCartBar(){
   }
 }
 
-/* ════════════════════════════════════
-   MODAL
-════════════════════════════════════ */
 function openCart(){ renderModal(); document.getElementById("modalBg").classList.add("open"); document.body.style.overflow="hidden"; }
 function closeCart(){ document.getElementById("modalBg").classList.remove("open"); document.body.style.overflow=""; }
 function closeCartOutside(e){ if(e.target===document.getElementById("modalBg")) closeCart(); }
@@ -1031,7 +900,6 @@ function renderModal(){
     </div>`; return;
   }
 
-  /* Items */
   const itemsHTML = `<div class="cart-items-section">${cart.map((c,i)=>`
     <div class="cart-item" style="animation-delay:${i*50}ms">
       <img class="ci-img" src="${c.img}" alt="${c.name}">
@@ -1050,7 +918,6 @@ function renderModal(){
       </div>
     </div>`).join("")}</div>`;
 
-  /* Summary */
   const tSmall = cart.filter(c=>c.price===7).reduce((s,c)=>s+c.qty,0);
   const orderId = genOrderId();
 
@@ -1094,7 +961,6 @@ function renderModal(){
     </div>
   </div>`;
 
-  /* PromptPay QR */
   const qrURL = buildPromptPayQR(PROMPTPAY_NUMBER, total);
   const qrHTML = `
   <div class="sec-label">
@@ -1120,7 +986,6 @@ function renderModal(){
   </div>
   <div class="qr-hint">📌 สแกนด้วยแอปธนาคารหรือ Mobile Banking ได้เลยครับ</div>`;
 
-  /* Sauce & Veg */
   const sauceVals  = ["ซอสรวม","มายองเนส","มะเขือเทศ","ซอสพริก","ไม่รับซอส"];
   const sauceIcons = {"ซอสรวม":"🎉","มายองเนส":"🟡","มะเขือเทศ":"🍅","ซอสพริก":"🔴","ไม่รับซอส":"🚫"};
   const curSauces  = (globalSauce||"ซอสรวม").split("+");
@@ -1149,7 +1014,6 @@ function renderModal(){
   </div>
   <div class="pref-note">✅ ซอสและผักจะใช้กับทุกรายการในออเดอร์นี้</div>`;
 
-  /* Delivery */
   const formHTML = `
   <div class="sec-label">
     <div class="sec-label-icon green">📍</div>
@@ -1198,18 +1062,13 @@ function handleGlobalSauceChange(el){
 function cartChg(i, d){ cart[i].qty = Math.max(1, cart[i].qty+d); saveCart(); updateCartBar(); renderModal(); }
 function cartDel(i){ cart.splice(i,1); saveCart(); updateCartBar(); renderModal(); }
 
-/* ════════════════════════════════════
-   PROMPTPAY QR URL
-════════════════════════════════════ */
 function buildPromptPayQR(phone, amount){
-  // Use api.qrserver.com to render QR from PromptPay payload
   const payload = makePromptPayPayload(phone, amount);
   return `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(payload)}`;
 }
 function makePromptPayPayload(phone, amount){
-  // Clean phone → 0XXXXXXXXX → 00TH0XXXXXXXXX
   const p = phone.replace(/\D/g,"");
-  const e164 = "0066" + p.slice(1); // 0066XXXXXXXXX
+  const e164 = "0066" + p.slice(1);
   const aid   = "A000000677010111";
   const ppAid = tlv("00", aid);
   const ppMid = tlv("01", e164);
@@ -1233,9 +1092,6 @@ function crc16(str){
   return crc&0xFFFF;
 }
 
-/* ════════════════════════════════════
-   VALIDATE & SEND LINE
-════════════════════════════════════ */
 function validateForm(){
   const el = document.getElementById("fldHouseNo");
   if(!el||!el.value.trim()){ if(el) el.classList.add("err"); return false; }
@@ -1244,17 +1100,21 @@ function validateForm(){
 function getThaiDateTime(){
   const now = new Date();
   return {
-    date: now.toLocaleDateString("th-TH",{weekday:"long",year:"numeric",month:"long",day:"numeric"}),
-    time: now.toLocaleTimeString("th-TH",{hour:"2-digit",minute:"2-digit",second:"2-digit"})
+    date: now.toLocaleDateString("th-TH",{year:"numeric",month:"long",day:"numeric"}),
+    time: now.toLocaleTimeString("th-TH",{hour:"2-digit",minute:"2-digit"})
   };
 }
 function genOrderId(){
   return "SB-"+Date.now().toString(36).toUpperCase().slice(-5)+Math.random().toString(36).substring(2,5).toUpperCase();
 }
 
+/* ══════════════════════════════════════
+   sendToLine — ตารางกระชับ มืออาชีพ
+══════════════════════════════════════ */
 function sendToLine(){
   if(!cart.length) return;
   if(!validateForm()){ showToast("⚠️ กรุณากรอกบ้านเลขที่"); return; }
+
   const houseNo = document.getElementById("fldHouseNo").value.trim();
   const soi     = document.getElementById("fldSoi").value.trim();
   const total   = cartGrandTotal();
@@ -1262,46 +1122,57 @@ function sendToLine(){
   const addr    = soi ? `บ้านเลขที่ ${houseNo}  ซ.${soi}` : `บ้านเลขที่ ${houseNo}`;
   const {date,time} = getThaiDateTime();
   const orderId = genOrderId();
-  const D1="━━━━━━━━━━━━━━━━━━━━━━";
-  const D2="┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄";
-  const tSmall = cart.filter(c=>c.price===7).reduce((s,c)=>s+c.qty,0);
-  const itemLines = cart.map((c,i)=>
-    `  ${i+1}. ${c.name} ${c.price===7?"[เล็ก]":"[จัมโบ้]"}\n`+
-    `     ├ จำนวน : ${c.qty} ชิ้น\n`+
-    `     └ ราคา  : ฿${itemTotal(c)}`
-  ).join("\n"+D2+"\n");
-  let promoBlock="";
-  if(tSmall>=3){
-    promoBlock=`\n${D2}\n🎉 โปรชิ้นเล็ก\n   รวม ${tSmall} ชิ้น = ${Math.floor(tSmall/3)}×20`+(tSmall%3>0?` + ${tSmall%3}×7`:"")+` บาท`;
+  const tSmall  = cart.filter(c=>c.price===7).reduce((s,c)=>s+c.qty,0);
+
+  // ── ฟังก์ชัน pad สำหรับจัดตาราง ──
+  const padR = (s,w) => { const str=String(s); return str.length>=w ? str.slice(0,w) : str+' '.repeat(w-str.length); };
+  const padL = (s,w) => { const str=String(s); return str.length>=w ? str.slice(0,w) : ' '.repeat(w-str.length)+str; };
+
+  // ── header ตาราง ──
+  const TL = "┌──┬────────────────────┬──────┬───┬───────┐";
+  const TH = "│ #│ รายการ             │ ขนาด │ × │ ราคา  │";
+  const TM = "├──┼────────────────────┼──────┼───┼───────┤";
+  const TB = "└──┴────────────────────┴──────┴───┴───────┘";
+
+  const rows = cart.map((c,i)=>{
+    const no   = padL(i+1, 2);
+    const nm   = padR(c.name, 19);
+    const sz   = c.price===7 ? "เล็ก  " : "จัมโบ้";
+    const qty  = padL(c.qty, 2);
+    const pr   = padL("฿"+itemTotal(c), 6);
+    return `│${no}│ ${nm}│ ${sz} │${qty} │ ${pr}  │`;
+  }).join("\n");
+
+  // ── โปรชิ้นเล็ก ──
+  let promoLine = "";
+  if(tSmall >= 3){
+    const sets = Math.floor(tSmall/3);
+    const rem  = tSmall % 3;
+    promoLine  = `\n🎉 โปร: ${tSmall} ชิ้นเล็ก = ${sets}×20`+(rem?`+${rem}×7`:"")+` บาท`;
   }
-  const msg=
-`@สโมกี้ไบร์ในตำนาน159/306
-${D1}
-🔥  ORDER RECEIPT  🔥
-${D1}
-🆔 ออเดอร์  : ${orderId}
-📅 วันที่    : ${date}
-🕐 เวลา     : ${time}
-${D1}
-📍 จัดส่งที่
-   ${addr}
-${D1}
-🍢 รายการสินค้า (${count} ชิ้น)
-${D2}
-${itemLines}${promoBlock}
-${D1}
-🥫 ซอส      : ${globalSauce}
-🥬 ผัก      : ${globalVeg}
-${D1}
-💰 ยอดรวมสุทธิ : ฿${total} บาท
-${D1}
+
+  const D = "━━━━━━━━━━━━━━━━━━━━━━━━━━━━";
+
+  const msg =
+`🔥 สโมกกี้ไบร์ท  ${orderId}
+${D}
+📅 ${date}  🕐 ${time}
+📍 ${addr}
+${D}
+${TL}
+${TH}
+${TM}
+${rows}
+${TB}${promoLine}
+${D}
+🥫 ซอส  : ${globalSauce}
+🥬 ผัก   : ${globalVeg}
+💰 ยอดรวม : ฿${total} บาท
 💳 PromptPay : ${PROMPTPAY_NUMBER}
-${D1}
+${D}
 🙏 ขอบคุณที่อุดหนุนสโมกกี้ไบร์ทครับ
-${D1}
-🛒 สั่งออนไลน์ได้ที่
-👉 https://ta-chalom-computer.github.io/smoky-bite/
-${D1}`;
+👉 https://ta-chalom-computer.github.io/smoky-bite/`;
+
   window.open("https://line.me/R/msg/text/?"+encodeURIComponent(msg),"_blank");
   showSuccess();
 }
@@ -1329,7 +1200,6 @@ function showSuccess(){
       cart=[];
       globalSauce="ซอสรวม";globalVeg="🥬 ใส่ผัก";
       saveCart();savePrefs();
-      // Reset btn states
       document.querySelectorAll(".btn-add").forEach(b=>{
         b.classList.remove("added");b.textContent="+ เพิ่มลงตะกร้า";
       });
@@ -1339,9 +1209,6 @@ function showSuccess(){
   },1000);
 }
 
-/* ════════════════════════════════════
-   TOAST
-════════════════════════════════════ */
 function showToast(msg){
   const t=document.getElementById("toast");
   t.textContent=msg;t.classList.add("show");
