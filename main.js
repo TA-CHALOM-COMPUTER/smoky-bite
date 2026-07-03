@@ -315,8 +315,7 @@ function sendToLine() {
   }
 
   const msg =
-    `@สโมกี้ไบร์ในตำนาน159/306
-${D1}
+    `${D1}
 🔥  ORDER RECEIPT  🔥
 ${D1}
 🆔 ออเดอร์  : ${orderId}
@@ -339,7 +338,11 @@ ${D1}
    รอยืนยันออเดอร์จากร้านสักครู่นะ 😊
 ${D1}`;
 
-  window.open("https://line.me/R/msg/text/?" + encodeURIComponent(msg), "_blank");
+  const LINE_OA_ID = "@651yehql"; // ไอดี LINE OA ของร้าน (จาก https://manager.line.biz/account/@651yehql/)
+  window.open(
+    "https://line.me/R/oaMessage/" + encodeURIComponent(LINE_OA_ID) + "/?" + encodeURIComponent(msg),
+    "_blank"
+  );
   showSuccess();
 }
 
