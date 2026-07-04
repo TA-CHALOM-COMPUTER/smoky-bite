@@ -256,35 +256,10 @@ function renderModal() {
     </div>
   </div>`;
 
-  const paymentHTML = `
-  <div class="section-divider"><span>ช่องทางชำระเงิน</span></div>
-  <div class="payment-section">
-    <div class="payment-toggle" onclick="togglePayment()">
-      <span>💳 โอนผ่าน PromptPay (ไม่บังคับ)</span>
-      <span class="payment-arrow" id="paymentArrow">▾</span>
-    </div>
-    <div class="payment-body" id="paymentBody">
-      <img class="payment-qr" src="promptpay-qr.jpg" alt="PromptPay QR Code">
-      <div class="payment-info">
-        <div class="payment-name">น.ส. พิจิตรา แก้วคำแสน</div>
-        <div class="payment-phone">พร้อมเพย์ 082-108-8428</div>
-        <div class="payment-hint">โอนแล้วแคปหน้าจอสลิป ส่งมาที่แชท LINE ของร้านได้เลยครับ (หรือเลือกเก็บเงินปลายทางก็ได้ตามปกติ)</div>
-      </div>
-    </div>
-  </div>`;
-
-  body.innerHTML = itemsHTML + summaryHTML + sauceVegSectionHTML + formHTML + paymentHTML;
+  body.innerHTML = itemsHTML + summaryHTML + sauceVegSectionHTML + formHTML;
   document.getElementById("fldHouseNo").addEventListener("input", function () {
     if (this.value.trim()) this.classList.remove("err");
   });
-}
-
-/* ── Toggle PromptPay payment info ── */
-function togglePayment() {
-  const el = document.getElementById("paymentBody");
-  const arrow = document.getElementById("paymentArrow");
-  el.classList.toggle("open");
-  arrow.textContent = el.classList.contains("open") ? "▴" : "▾";
 }
 
 /* ── Cart item controls ── */
