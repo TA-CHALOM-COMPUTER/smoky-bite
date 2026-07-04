@@ -250,7 +250,7 @@ function renderModal() {
       <div class="field-row full">
         <div class="field-wrap">
           <label class="field-label">หมายเหตุ</label>
-          <textarea class="field-input field-textarea" id="fldNote" rows="2" placeholder="เช่น ฝากไว้ที่ตู้ไปรษณีย์ / โทรก่อนส่ง" maxlength="200"></textarea>
+          <textarea class="field-input field-textarea" id="fldNote" rows="2" placeholder="เช่น ใช้สิทธิ์ไทยช่วยไทย 60/40" maxlength="200"></textarea>
         </div>
       </div>
     </div>
