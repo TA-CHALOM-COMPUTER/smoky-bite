@@ -231,23 +231,6 @@ function renderModal() {
     </div>
   </div>`;
 
-  const paymentSectionHTML = `
-  <div class="section-divider"><span>ช่องทางชำระเงิน</span></div>
-  <div class="payment-section">
-    <div class="payment-header">💳 สแกนจ่ายผ่าน PromptPay</div>
-    <div class="payment-body">
-      <img class="payment-qr-img" src="payment-qr.jpg" alt="PromptPay QR Code">
-      <div class="payment-info">
-        <div class="payment-name">น.ส. พิจิตรา แก้วคำแสน</div>
-        <div class="payment-phone-row">
-          <span class="payment-phone">082-108-8428</span>
-          <button type="button" class="payment-copy-btn" onclick="copyPromptPay()">📋 คัดลอก</button>
-        </div>
-        <div class="payment-note">✅ โอนแล้วแนบสลิปพร้อมแจ้งเลขออเดอร์ทาง LINE ได้เลยครับ</div>
-      </div>
-    </div>
-  </div>`;
-
   const formHTML = `
   <div class="section-divider"><span>ที่อยู่จัดส่ง</span></div>
   <div class="delivery-section">
@@ -273,7 +256,7 @@ function renderModal() {
     </div>
   </div>`;
 
-  body.innerHTML = itemsHTML + summaryHTML + sauceVegSectionHTML + paymentSectionHTML + formHTML;
+  body.innerHTML = itemsHTML + summaryHTML + sauceVegSectionHTML + formHTML;
   document.getElementById("fldHouseNo").addEventListener("input", function () {
     if (this.value.trim()) this.classList.remove("err");
   });
@@ -390,18 +373,6 @@ function showSuccess() {
       updateCartBar(); closeCart();
     }
   }, 1000);
-}
-
-/* ── คัดลอกเบอร์พร้อมเพย์ ── */
-function copyPromptPay() {
-  const number = "0821088428";
-  if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(number)
-      .then(() => showToast("📋 คัดลอกเบอร์พร้อมเพย์แล้วครับ"))
-      .catch(() => showToast("⚠️ คัดลอกไม่สำเร็จ กรุณาคัดลอกด้วยตนเอง"));
-  } else {
-    showToast("⚠️ อุปกรณ์นี้ไม่รองรับการคัดลอกอัตโนมัติ");
-  }
 }
 
 /* ── Toast notification ── */

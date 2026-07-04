@@ -184,18 +184,6 @@ body::before{content:"";position:fixed;inset:0;background:radial-gradient(ellips
 .msi-label{font-size:10px;font-weight:700;letter-spacing:0.06em;color:var(--muted);text-transform:uppercase;min-width:28px;padding-top:6px;}
 .modal-sauce-grid{grid-template-columns:1fr 1fr 1fr;gap:4px;}
 .msi-note{font-size:11px;color:var(--green);margin-top:10px;font-weight:600;display:flex;align-items:center;gap:4px;}
-.payment-section{margin:0 16px 16px;background:var(--modal-card);border:1px solid var(--modal-border);border-radius:16px;overflow:hidden;}
-.payment-header{padding:12px 16px;background:rgba(255,215,0,0.08);border-bottom:1px solid var(--modal-border);font-size:12px;font-weight:700;color:var(--gold);letter-spacing:0.04em;display:flex;align-items:center;gap:6px;}
-.payment-body{padding:16px;display:flex;gap:16px;align-items:center;}
-.payment-qr-img{width:104px;height:104px;border-radius:10px;object-fit:cover;border:1px solid var(--modal-border);flex-shrink:0;background:#fff;}
-.payment-info{flex:1;min-width:0;}
-.payment-name{font-size:13px;font-weight:700;color:var(--text);margin-bottom:8px;}
-.payment-phone-row{display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap;}
-.payment-phone{font-size:15px;font-weight:900;color:var(--gold);letter-spacing:0.03em;}
-.payment-copy-btn{font-size:11px;font-weight:700;color:var(--text);background:rgba(255,255,255,0.06);border:1px solid var(--modal-border);border-radius:20px;padding:4px 10px;cursor:pointer;transition:background 0.15s;}
-.payment-copy-btn:hover{background:rgba(255,255,255,0.12);}
-.payment-note{font-size:11px;color:var(--green);font-weight:600;line-height:1.4;}
-@media(max-width:380px){.payment-body{flex-direction:column;align-items:flex-start;}.payment-qr-img{width:100%;max-width:150px;height:auto;aspect-ratio:1/1;}}
 .success-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:48px 24px 32px;text-align:center;gap:0;min-height:300px;}
 .success-glow{width:88px;height:88px;border-radius:50%;background:rgba(34,197,94,0.12);border:1px solid rgba(34,197,94,0.25);display:flex;align-items:center;justify-content:center;font-size:40px;margin-bottom:20px;animation:popIn 0.5s cubic-bezier(.34,1.56,.64,1);}
 @keyframes popIn{0%{transform:scale(0);opacity:0}100%{transform:scale(1);opacity:1}}
