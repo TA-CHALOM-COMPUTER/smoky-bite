@@ -71,12 +71,32 @@ function replyLine(replyToken, text) {
 function pushLine(text) {
   const userId = PropertiesService.getScriptProperties().getProperty('ADMIN_USER_ID');
   if (!userId) return; // ยังไม่เคยแอดเพื่อน/ทักหา OA เลยยังไม่มี userId ให้ push
-  UrlFetchApp.fetch('https://api.line.me/v2/bot/message/push', {
-    method: 'post',
-    contentType: 'application/json',
-    headers: { Authorization: 'Bearer ' + CHANNEL_ACCESS_TOKEN },
-    payload: JSON.stringify({ to: userId, messages: [{ type: 'text', text: text }] })
-  });
+  try {
+    const res = UrlFetchApp.fetch('https://api.line.me/v2/bot/message/push', {
+      method: 'post',
+      contentType: 'application/json',
+      headers: { Authorization: 'Bearer ' + CHANNEL_ACCESS_TOKEN },
+      payload: JSON.stringify({ to: userId, messages: [{ type: 'text', text: text }] }),
+      muteHttpExceptions: true // ไม่ให้ throw error ทันที จะได้เก็บรายละเอียดไปดูได้
+    });
+    const code = res.getResponseCode();
+    if (code !== 200) {
+      logLineError(code, res.getContentText());
+    }
+  } catch (err) {
+    logLineError('exception', err.message);
+  }
+}
+
+/* ── บันทึก error ตอนส่งเข้า LINE ไม่สำเร็จ ลงชีตแยก เพื่อใช้ตรวจสอบสาเหตุย้อนหลัง ── */
+function logLineError(code, body) {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  let sheet = ss.getSheetByName('LINE_Errors');
+  if (!sheet) {
+    sheet = ss.insertSheet('LINE_Errors');
+    sheet.appendRow(['เวลา', 'HTTP Status / Error', 'รายละเอียดจาก LINE']);
+  }
+  sheet.appendRow([new Date(), code, body]);
 }
 
 /* ── บันทึกออเดอร์ลง Sheet + แจ้งเตือนเข้า LINE แอดมิน ── */
@@ -87,6 +107,9 @@ function handleOrder(data) {
     sheet = ss.insertSheet(SHEET_NAME);
     sheet.appendRow(['เวลาที่บันทึก', 'เลขออเดอร์', 'วันที่', 'เวลา', 'ที่อยู่จัดส่ง', 'รายการสินค้า', 'ซอส', 'ผัก', 'หมายเหตุ', 'ยอดรวม (บาท)']);
   }
+
+  // ── ซ่อมคอลัมน์ "หมายเหตุ" ให้อัตโนมัติ ถ้า Sheet เดิมยังไม่มีคอลัมน์นี้ ──
+  ensureNoteColumn(sheet);
 
   const itemsText = data.items.map(function (it) {
     return it.name + ' x' + it.qty + ' (฿' + it.price + ')';
@@ -123,6 +146,25 @@ function handleOrder(data) {
   lines.push('💰 ยอดรวม: ฿' + data.total);
 
   pushLine(lines.join('\n'));
+}
+
+/* ── ตรวจสอบว่า Sheet มีคอลัมน์ "หมายเหตุ" อยู่ก่อนคอลัมน์ "ยอดรวม" หรือยัง ──
+   ถ้า Sheet ถูกสร้างไว้ก่อนที่จะมีฟีเจอร์นี้ จะแทรกคอลัมน์ให้อัตโนมัติ
+   เพื่อไม่ให้ข้อมูลเลื่อนคอลัมน์ผิดตำแหน่ง ── */
+function ensureNoteColumn(sheet) {
+  const lastCol = sheet.getLastColumn();
+  if (lastCol === 0) return; // sheet ว่างเปล่า ไม่มีหัวตารางเลย ปล่อยผ่าน
+  const headers = sheet.getRange(1, 1, 1, lastCol).getValues()[0];
+  if (headers.indexOf('หมายเหตุ') !== -1) return; // มีคอลัมน์นี้อยู่แล้ว ไม่ต้องทำอะไร
+
+  const totalColIdx = headers.indexOf('ยอดรวม (บาท)'); // 0-based index
+  if (totalColIdx > -1) {
+    sheet.insertColumnBefore(totalColIdx + 1);
+    sheet.getRange(1, totalColIdx + 1).setValue('หมายเหตุ');
+  } else {
+    // ไม่เจอคอลัมน์ยอดรวมเลย (กรณีหัวตารางถูกแก้ไปมาก) ต่อคอลัมน์ใหม่ท้ายสุดแทน
+    sheet.getRange(1, lastCol + 1).setValue('หมายเหตุ');
+  }
 }
 
 function testAuth() {
