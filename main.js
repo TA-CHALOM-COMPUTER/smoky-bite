@@ -69,11 +69,16 @@ function chgQty(id, d) {
 
 /* ── Sauce handler ── */
 function handleGlobalSauceChange(el) {
-  if (el.value === "ไม่รับซอส" && el.checked) {
-    document.querySelectorAll('input[name="gsauce"]').forEach(c => { if (c.value !== "ไม่รับซอส") c.checked = false; });
+  const exclusiveValues = ["ซอสรวม", "ไม่รับซอส"];
+  if (exclusiveValues.includes(el.value) && el.checked) {
+    // เลือก "ซอสรวม" หรือ "ไม่รับซอส" แล้ว ต้องยกเลิกตัวเลือกอื่นทั้งหมด
+    document.querySelectorAll('input[name="gsauce"]').forEach(c => { if (c.value !== el.value) c.checked = false; });
   } else if (el.checked) {
-    const ns = document.querySelector('input[name="gsauce"][value="ไม่รับซอส"]');
-    if (ns) ns.checked = false;
+    // เลือกซอสแบบเจาะจง (มายองเนส/มะเขือเทศ/ซอสพริก) ต้องยกเลิก "ซอสรวม" และ "ไม่รับซอส"
+    exclusiveValues.forEach(v => {
+      const exEl = document.querySelector('input[name="gsauce"][value="' + v + '"]');
+      if (exEl) exEl.checked = false;
+    });
   }
   const checked = [...document.querySelectorAll('input[name="gsauce"]:checked')].map(e => e.value);
   globalSauce = checked.length > 0 ? checked.join("+") : "ซอสรวม";
@@ -161,7 +166,6 @@ function renderModal() {
       <img class="ci-img" src="${c.img}" alt="${c.name}">
       <div class="ci-info">
         <div class="ci-name">${c.name}</div>
-        <div class="ci-sauce">${c.sauce} · ${c.veg}</div>
         <div class="ci-controls">
           <button class="ci-qbtn" onclick="cartChg(${i},-1)">−</button>
           <span class="ci-qnum">${c.qty}</span>
@@ -180,7 +184,7 @@ function renderModal() {
     return `<div class="os-item">
       <div class="os-item-left">
         <div class="os-item-name">${c.name}${promoTag}</div>
-        <div class="os-item-detail">${c.sauce} · ${c.veg} · จำนวน ${c.qty} ชิ้น</div>
+        <div class="os-item-detail">จำนวน ${c.qty} ชิ้น</div>
       </div>
       <div class="os-item-price">฿${itemTotal(c)}</div>
     </div>`;
