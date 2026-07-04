@@ -279,8 +279,11 @@ function genOrderId() {
   return "SB-" + ts + rnd;
 }
 
-/* ── Send to LINE ── */
-function sendToLine() {
+/* ── ตั้งค่า Apps Script Web App URL (ได้จากขั้นตอน Deploy) ── */
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/ใส่-DEPLOYMENT-ID-ตรงนี้/exec";
+
+/* ── ส่งออเดอร์ (ไม่ต้องแอดเพื่อน LINE) ── */
+async function sendToLine() {
   if (cart.length === 0) return;
   if (!validateForm()) { showToast("⚠️ กรุณากรอกบ้านเลขที่"); return; }
 
@@ -292,70 +295,52 @@ function sendToLine() {
   const { date, time } = getThaiDateTime();
   const orderId = genOrderId();
 
-  const D1 = "━━━━━━━━━━━━━━━━━━━━━━";
-  const D2 = "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄";
+  const orderPayload = {
+    orderId,
+    date,
+    time,
+    address: addrLine,
+    items: cart.map(c => ({ name: c.name, qty: c.qty, price: itemTotal(c) })),
+    sauce: globalSauce,
+    veg: globalVeg,
+    total,
+    count
+  };
 
-  const smallQtyTotal = cart.filter(c => c.price === 7).reduce((s, c) => s + c.qty, 0);
-  const jumboQtyTotal = cart.filter(c => c.price !== 7).reduce((s, c) => s + c.qty, 0);
+  const btnLine = document.getElementById("btnLine");
+  btnLine.disabled = true;
+  const originalHTML = btnLine.innerHTML;
+  btnLine.innerHTML = "<span>⏳</span><span>กำลังส่งออเดอร์...</span>";
 
-  const itemLines = cart.map((c, i) => {
-    const sizeTag = c.price === 7 ? "[เล็ก]" : "[จัมโบ้]";
-    const price = itemTotal(c);
-    return `  ${i + 1}. ${c.name} ${sizeTag}\n` +
-      `     ├ จำนวน : ${c.qty} ชิ้น\n` +
-      `     └ ราคา  : ฿${price}`;
-  }).join("\n" + D2 + "\n");
-
-  let promoBlock = "";
-  if (smallQtyTotal >= 3) {
-    promoBlock = `\n${D2}\n` +
-      `🎉 โปรชิ้นเล็ก\n` +
-      `   รวม ${smallQtyTotal} ชิ้น = ${Math.floor(smallQtyTotal / 3)}×20` +
-      (smallQtyTotal % 3 > 0 ? ` + ${smallQtyTotal % 3}×7` : "") + ` บาท`;
+  try {
+    // ใช้ mode: no-cors เพราะ Apps Script Web App ไม่ส่ง CORS header กลับมา
+    // (ทำให้อ่าน response ไม่ได้ แต่ request ยังถูกส่งและประมวลผลตามปกติ)
+    await fetch(APPS_SCRIPT_URL, {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify(orderPayload)
+    });
+    showSuccess();
+  } catch (err) {
+    console.error("ส่งออเดอร์ไม่สำเร็จ:", err);
+    showToast("⚠️ ส่งออเดอร์ไม่สำเร็จ กรุณาลองใหม่ หรือโทร 063-509-6265");
+    btnLine.disabled = false;
+    btnLine.innerHTML = originalHTML;
   }
-
-  const msg =
-    `${D1}
-🔥  ORDER RECEIPT  🔥
-${D1}
-🆔 ออเดอร์  : ${orderId}
-📅 วันที่    : ${date}
-🕐 เวลา     : ${time}
-${D1}
-📍 จัดส่งที่
-   ${addrLine}
-${D1}
-🍢 รายการสินค้า (${count} ชิ้น)
-${D2}
-${itemLines}${promoBlock}
-${D1}
-🥫 ซอส      : ${globalSauce}
-🥬 ผัก      : ${globalVeg}
-${D1}
-💰 ยอดรวมสุทธิ : ฿${total} บาท
-${D1}
-🙏 ขอบคุณที่อุดหนุนสโมกกี้ไบร์ทครับ
-   รอยืนยันออเดอร์จากร้านสักครู่นะ 😊
-${D1}`;
-
-  const LINE_OA_ID = "@651yehql"; // ไอดี LINE OA ของร้าน (จาก https://manager.line.biz/account/@651yehql/)
-  window.open(
-    "https://line.me/R/oaMessage/" + encodeURIComponent(LINE_OA_ID) + "/?" + encodeURIComponent(msg),
-    "_blank"
-  );
-  showSuccess();
 }
 
 /* ── Success screen ── */
 function showSuccess() {
   const body = document.getElementById("modalBody");
-  document.getElementById("btnLine").style.display = "none";
+  const btnLine = document.getElementById("btnLine");
+  btnLine.style.display = "none";
   const sub = document.getElementById("modalHeadSub");
   sub.textContent = "ส่งออเดอร์เสร็จแล้ว 🎉";
   body.innerHTML = `<div class="success-screen">
     <div class="success-glow">✅</div>
     <div class="success-title">ส่งออเดอร์เรียบร้อยแล้ว!</div>
-    <div class="success-sub">ระบบส่งรายการไป LINE แล้วครับ<br>รอร้านยืนยันออเดอร์สักครู่นะครับ 🙏</div>
+    <div class="success-sub">ร้านได้รับรายการสั่งซื้อแล้วครับ<br>รอร้านยืนยันออเดอร์สักครู่นะครับ 🙏</div>
     <div class="success-countdown" id="successCountdown">กลับสู่หน้าหลักใน 3 วินาที...</div>
     <div class="success-bar-wrap"><div class="success-bar" id="successBar"></div></div>
   </div>`;
@@ -370,7 +355,9 @@ function showSuccess() {
     if (sec <= 0) {
       clearInterval(timer);
       cart = []; globalSauce = "ซอสรวม"; globalVeg = "🥬 ใส่ผัก";
-      document.getElementById("btnLine").style.display = "";
+      btnLine.disabled = false;
+      btnLine.innerHTML = `<span>💬</span><span>สั่งผ่าน LINE ทันที!<span class="btn-line-sub">กดเพื่อส่งออเดอร์ไปหาร้าน</span></span>`;
+      btnLine.style.display = "";
       updateCartBar(); closeCart();
     }
   }, 1000);
