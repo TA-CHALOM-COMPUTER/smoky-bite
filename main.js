@@ -239,18 +239,18 @@ function renderModal() {
       <div class="field-row">
         <div class="field-wrap">
           <label class="field-label">บ้านเลขที่<span class="field-required">*</span></label>
-          <input class="field-input" id="fldHouseNo" type="text" placeholder="เช่น 159/306" maxlength="30">
+          <input class="field-input" id="fldHouseNo" type="text" placeholder="เช่น 306" maxlength="30">
           <span class="field-err">กรุณากรอกบ้านเลขที่</span>
         </div>
         <div class="field-wrap">
           <label class="field-label">ซอย</label>
-          <input class="field-input" id="fldSoi" type="text" placeholder="เช่น ซ.3" maxlength="60">
+          <input class="field-input" id="fldSoi" type="text" placeholder="เช่น 3" maxlength="60">
         </div>
       </div>
       <div class="field-row full">
         <div class="field-wrap">
           <label class="field-label">หมายเหตุ</label>
-          <textarea class="field-input field-textarea" id="fldNote" rows="2" placeholder="เช่น ฝากไว้ที่ตู้ไปรษณีย์ / โทรก่อนส่ง" maxlength="200"></textarea>
+          <textarea class="field-input field-textarea" id="fldNote" rows="2" placeholder="เช่น ฝากไว้หน้าบ้าน / " maxlength="200"></textarea>
         </div>
       </div>
     </div>
