@@ -247,6 +247,12 @@ function renderModal() {
           <input class="field-input" id="fldSoi" type="text" placeholder="เช่น ซ.3" maxlength="60">
         </div>
       </div>
+      <div class="field-row full">
+        <div class="field-wrap">
+          <label class="field-label">หมายเหตุ</label>
+          <textarea class="field-input field-textarea" id="fldNote" rows="2" placeholder="เช่น ฝากไว้ที่ตู้ไปรษณีย์ / โทรก่อนส่ง" maxlength="200"></textarea>
+        </div>
+      </div>
     </div>
   </div>`;
 
@@ -293,6 +299,7 @@ async function sendToLine() {
 
   const houseNo = document.getElementById("fldHouseNo").value.trim();
   const soi = document.getElementById("fldSoi").value.trim();
+  const note = document.getElementById("fldNote").value.trim();
   const total = cartGrandTotal();
   const count = totalCount();
   const addrLine = soi ? `บ้านเลขที่ ${houseNo}  ซ.${soi}` : `บ้านเลขที่ ${houseNo}`;
@@ -307,6 +314,7 @@ async function sendToLine() {
     items: cart.map(c => ({ name: c.name, qty: c.qty, price: itemTotal(c) })),
     sauce: globalSauce,
     veg: globalVeg,
+    note,
     total,
     count
   };

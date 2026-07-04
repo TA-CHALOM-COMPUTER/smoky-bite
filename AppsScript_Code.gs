@@ -85,7 +85,7 @@ function handleOrder(data) {
   let sheet = ss.getSheetByName(SHEET_NAME);
   if (!sheet) {
     sheet = ss.insertSheet(SHEET_NAME);
-    sheet.appendRow(['เวลาที่บันทึก', 'เลขออเดอร์', 'วันที่', 'เวลา', 'ที่อยู่จัดส่ง', 'รายการสินค้า', 'ซอส', 'ผัก', 'ยอดรวม (บาท)']);
+    sheet.appendRow(['เวลาที่บันทึก', 'เลขออเดอร์', 'วันที่', 'เวลา', 'ที่อยู่จัดส่ง', 'รายการสินค้า', 'ซอส', 'ผัก', 'หมายเหตุ', 'ยอดรวม (บาท)']);
   }
 
   const itemsText = data.items.map(function (it) {
@@ -101,6 +101,7 @@ function handleOrder(data) {
     itemsText,
     data.sauce,
     data.veg,
+    data.note || '',
     data.total
   ]);
 
@@ -116,6 +117,9 @@ function handleOrder(data) {
   lines.push('━━━━━━━━━━━━━━');
   lines.push('🥫 ซอส: ' + data.sauce);
   lines.push('🥬 ผัก: ' + data.veg);
+  if (data.note) {
+    lines.push('📝 หมายเหตุ: ' + data.note);
+  }
   lines.push('💰 ยอดรวม: ฿' + data.total);
 
   pushLine(lines.join('\n'));
