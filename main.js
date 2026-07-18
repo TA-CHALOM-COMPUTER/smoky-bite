@@ -363,7 +363,7 @@ async function sendToLine() {
       headers: { "Content-Type": "text/plain;charset=utf-8" },
       body: JSON.stringify(orderPayload)
     });
-    showSuccess();
+    showSuccess(orderPayload);
   } catch (err) {
     console.error("ส่งออเดอร์ไม่สำเร็จ:", err);
     showToast("⚠️ ส่งออเดอร์ไม่สำเร็จ กรุณาลองใหม่ หรือโทร 063-509-6265");
@@ -373,17 +373,55 @@ async function sendToLine() {
 }
 
 /* ── Success screen ── */
-function showSuccess() {
+function showSuccess(order) {
   const body = document.getElementById("modalBody");
   const btnLine = document.getElementById("btnLine");
   btnLine.style.display = "none";
   isOrderSuccess = true;
   const sub = document.getElementById("modalHeadSub");
   sub.textContent = "ส่งออเดอร์เสร็จแล้ว 🎉";
+
+  const itemsHTML = order.items.map(it => `
+    <div class="os-item">
+      <div class="os-item-left">
+        <div class="os-item-name">${it.name}</div>
+        <div class="os-item-detail">จำนวน ${it.qty} ชิ้น</div>
+      </div>
+      <div class="os-item-price">฿${it.price}</div>
+    </div>`).join("");
+
   body.innerHTML = `<div class="success-screen">
     <div class="success-glow">✅</div>
     <div class="success-title">ส่งออเดอร์เรียบร้อยแล้ว!</div>
     <div class="success-sub">ร้านได้รับรายการสั่งซื้อแล้วครับ<br>รอร้านยืนยันออเดอร์สักครู่นะครับ 🙏</div>
+  </div>
+
+  <div class="section-divider"><span>เลขที่ออเดอร์</span></div>
+  <div class="order-summary" style="text-align:center;padding:14px;">
+    <div style="font-size:18px;font-weight:900;letter-spacing:0.5px;color:var(--fire2, #ffaa00);">${order.orderId}</div>
+    <div style="font-size:12px;color:var(--muted);margin-top:4px;">${order.date} • ${order.time}</div>
+  </div>
+
+  <div class="section-divider"><span>ทวนรายการสั่งซื้อ</span></div>
+  <div class="order-summary">
+    <div class="os-header">🧾 รายการสินค้า <span class="count-chip">${order.count} ชิ้น</span></div>
+    ${itemsHTML}
+    <div class="os-total-row">
+      <div>
+        <div class="os-total-label">ยอดรวมทั้งหมด</div>
+        <div class="os-total-note">🥫 ซอส: ${order.sauce} • 🥬 ${order.veg}</div>
+      </div>
+      <div class="os-total-amount">฿${order.total}</div>
+    </div>
+  </div>
+
+  <div class="section-divider"><span>จัดส่งไปที่</span></div>
+  <div class="order-summary" style="padding:12px 14px;">
+    <div style="font-size:14px;">📍 ${order.address}</div>
+    ${order.note ? `<div style="font-size:12px;color:var(--muted);margin-top:6px;">📝 ${order.note}</div>` : ""}
+  </div>
+
+  <div class="success-screen" style="padding-top:20px;padding-bottom:8px;min-height:auto;">
     <div class="success-countdown">กดปุ่ม ✕ ด้านบนเพื่อปิดหน้าต่างนี้ได้เลยครับ</div>
   </div>`;
 }
