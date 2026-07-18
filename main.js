@@ -352,10 +352,28 @@ async function sendToLine() {
     const pending = { cart, sauce: globalSauce, veg: globalVeg, houseNo, soi, note };
     sessionStorage.setItem("sb_pending_order", JSON.stringify(pending));
     showToast("🔐 กำลังพาไปยืนยันตัวตนผ่าน LINE...");
-    setTimeout(() => { liff.login({ redirectUri: window.location.href }); }, 500);
+
+    // กันลูกค้าติดค้าง: ถ้า login ไม่สำเร็จ/ error ให้ส่งออเดอร์แบบไม่ผูก LINE แทนอัตโนมัติ
+    let loginFailed = false;
+    try {
+      liff.login({ redirectUri: window.location.href });
+    } catch (loginErr) {
+      console.error("liff.login error:", loginErr);
+      loginFailed = true;
+    }
+    if (loginFailed) {
+      sessionStorage.removeItem("sb_pending_order");
+      showToast("⚠️ ยืนยันตัวตน LINE ไม่สำเร็จ กำลังส่งออเดอร์แบบไม่ผูก LINE แทน");
+      await submitOrder(houseNo, soi, note, null, "");
+    }
     return;
   }
 
+  await submitOrder(houseNo, soi, note, lineProfile ? lineProfile.userId : null, lineProfile ? lineProfile.displayName : "");
+}
+
+/* ── ส่งออเดอร์จริงเข้า Apps Script (เรียกจาก sendToLine ทั้งกรณีมี/ไม่มี userId) ── */
+async function submitOrder(houseNo, soi, note, userId, displayName) {
   const total = cartGrandTotal();
   const count = totalCount();
   const addrLine = soi ? `บ้านเลขที่ ${houseNo}  ซ.${soi}` : `บ้านเลขที่ ${houseNo}`;
@@ -373,8 +391,8 @@ async function sendToLine() {
     note,
     total,
     count,
-    userId: lineProfile ? lineProfile.userId : null,
-    displayName: lineProfile ? lineProfile.displayName : ""
+    userId: userId || null,
+    displayName: displayName || ""
   };
 
   const btnLine = document.getElementById("btnLine");
