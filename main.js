@@ -31,6 +31,52 @@ let cart = [];
 let globalSauce = "ซอสรวม";
 let globalVeg = "🥬 ใส่ผัก";
 
+/* ── LIFF (LINE Login) ── */
+const LIFF_ID = "2010749510-214dgBnJ";
+let liffReady = false;
+let lineProfile = null;
+
+async function initLiff() {
+  if (typeof liff === "undefined") { console.warn("LIFF SDK โหลดไม่สำเร็จ (สั่งซื้อได้ปกติ แต่จะไม่ได้รับข้อความยืนยันทาง LINE)"); return; }
+  try {
+    await liff.init({ liffId: LIFF_ID });
+    liffReady = true;
+    if (liff.isLoggedIn()) {
+      lineProfile = await liff.getProfile();
+    }
+  } catch (err) {
+    console.error("LIFF init error:", err);
+  }
+  restorePendingOrder();
+}
+window.addEventListener("DOMContentLoaded", initLiff);
+
+/* ── กู้ตะกร้า+ฟอร์มที่ค้างไว้ หลังลูกค้าถูก redirect ไปล็อกอิน LINE แล้วกลับมา ── */
+function restorePendingOrder() {
+  const saved = sessionStorage.getItem("sb_pending_order");
+  if (!saved) return;
+  sessionStorage.removeItem("sb_pending_order");
+  try {
+    const state = JSON.parse(saved);
+    cart = state.cart || [];
+    globalSauce = state.sauce || globalSauce;
+    globalVeg = state.veg || globalVeg;
+    updateCartBar();
+    if (cart.length > 0) {
+      openCart();
+      setTimeout(() => {
+        const h = document.getElementById("fldHouseNo");
+        const s = document.getElementById("fldSoi");
+        const n = document.getElementById("fldNote");
+        if (h && state.houseNo) h.value = state.houseNo;
+        if (s && state.soi) s.value = state.soi;
+        if (n && state.note) n.value = state.note;
+        showToast("✅ ยืนยันตัวตนผ่าน LINE แล้ว กดส่งออเดอร์อีกครั้งได้เลยครับ");
+      }, 150);
+    }
+  } catch (e) { console.error(e); }
+}
+
 /* ── Build product card ── */
 function buildCard(m, isJumbo) {
   const promo = isJumbo ? "" : `<div class="card-promo">3 ชิ้น = 20 บาท 🔥</div>`;
@@ -300,6 +346,16 @@ async function sendToLine() {
   const houseNo = document.getElementById("fldHouseNo").value.trim();
   const soi = document.getElementById("fldSoi").value.trim();
   const note = document.getElementById("fldNote").value.trim();
+
+  /* ── ถ้ายังไม่ได้ล็อกอิน LINE ให้เก็บตะกร้า+ฟอร์มไว้ก่อน แล้วพาไปล็อกอิน ── */
+  if (typeof liff !== "undefined" && liffReady && !liff.isLoggedIn()) {
+    const pending = { cart, sauce: globalSauce, veg: globalVeg, houseNo, soi, note };
+    sessionStorage.setItem("sb_pending_order", JSON.stringify(pending));
+    showToast("🔐 กำลังพาไปยืนยันตัวตนผ่าน LINE...");
+    setTimeout(() => { liff.login({ redirectUri: window.location.href }); }, 500);
+    return;
+  }
+
   const total = cartGrandTotal();
   const count = totalCount();
   const addrLine = soi ? `บ้านเลขที่ ${houseNo}  ซ.${soi}` : `บ้านเลขที่ ${houseNo}`;
@@ -316,7 +372,9 @@ async function sendToLine() {
     veg: globalVeg,
     note,
     total,
-    count
+    count,
+    userId: lineProfile ? lineProfile.userId : null,
+    displayName: lineProfile ? lineProfile.displayName : ""
   };
 
   const btnLine = document.getElementById("btnLine");
