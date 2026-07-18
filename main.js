@@ -302,7 +302,16 @@ function renderModal() {
     </div>
   </div>`;
 
-  body.innerHTML = itemsHTML + summaryHTML + sauceVegSectionHTML + formHTML;
+  const lineConnectHTML = lineProfile
+    ? `<div style="display:flex;align-items:center;gap:8px;padding:10px 14px;margin-top:10px;background:rgba(6,199,85,0.08);border:1px solid rgba(6,199,85,0.25);border-radius:12px;font-size:12px;">
+        <span>✅</span><span>เชื่อมบัญชี LINE แล้ว (${lineProfile.displayName}) — ร้านจะส่งข้อความยืนยันออเดอร์ให้ทาง LINE อัตโนมัติ</span>
+      </div>`
+    : `<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 14px;margin-top:10px;background:rgba(255,255,255,0.04);border:1px dashed rgba(255,255,255,0.15);border-radius:12px;font-size:12px;">
+        <span>💬 อยากรับข้อความยืนยันออเดอร์ทาง LINE ไหม?</span>
+        <button type="button" onclick="connectLine()" style="white-space:nowrap;background:#06c755;color:#fff;border:none;border-radius:8px;padding:6px 12px;font-size:12px;font-weight:700;cursor:pointer;">เชื่อมบัญชี LINE</button>
+      </div>`;
+
+  body.innerHTML = itemsHTML + summaryHTML + sauceVegSectionHTML + formHTML + lineConnectHTML;
   document.getElementById("fldHouseNo").addEventListener("input", function () {
     if (this.value.trim()) this.classList.remove("err");
   });
@@ -338,7 +347,7 @@ function genOrderId() {
 /* ── ตั้งค่า Apps Script Web App URL (ได้จากขั้นตอน Deploy) ── */
 const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbysYdksZPEhoR7eZrtBpkUXpKPuCPBV1BbgDOwyFbFp7Qgb-fV4t9_hX-9oWVggPEQ/exec";
 
-/* ── ส่งออเดอร์ (ไม่ต้องแอดเพื่อน LINE) ── */
+/* ── ส่งออเดอร์ (ไม่ต้องแอดเพื่อน/ล็อกอิน LINE ก็สั่งได้ปกติ) ── */
 async function sendToLine() {
   if (cart.length === 0) return;
   if (!validateForm()) { showToast("⚠️ กรุณากรอกบ้านเลขที่"); return; }
@@ -347,29 +356,27 @@ async function sendToLine() {
   const soi = document.getElementById("fldSoi").value.trim();
   const note = document.getElementById("fldNote").value.trim();
 
-  /* ── ถ้ายังไม่ได้ล็อกอิน LINE ให้เก็บตะกร้า+ฟอร์มไว้ก่อน แล้วพาไปล็อกอิน ── */
-  if (typeof liff !== "undefined" && liffReady && !liff.isLoggedIn()) {
-    const pending = { cart, sauce: globalSauce, veg: globalVeg, houseNo, soi, note };
-    sessionStorage.setItem("sb_pending_order", JSON.stringify(pending));
-    showToast("🔐 กำลังพาไปยืนยันตัวตนผ่าน LINE...");
+  await submitOrder(houseNo, soi, note, lineProfile ? lineProfile.userId : null, lineProfile ? lineProfile.displayName : "");
+}
 
-    // กันลูกค้าติดค้าง: ถ้า login ไม่สำเร็จ/ error ให้ส่งออเดอร์แบบไม่ผูก LINE แทนอัตโนมัติ
-    let loginFailed = false;
-    try {
-      liff.login({ redirectUri: window.location.href });
-    } catch (loginErr) {
-      console.error("liff.login error:", loginErr);
-      loginFailed = true;
-    }
-    if (loginFailed) {
-      sessionStorage.removeItem("sb_pending_order");
-      showToast("⚠️ ยืนยันตัวตน LINE ไม่สำเร็จ กำลังส่งออเดอร์แบบไม่ผูก LINE แทน");
-      await submitOrder(houseNo, soi, note, null, "");
-    }
+/* ── เชื่อมบัญชี LINE (ไม่บังคับ) — กดครั้งเดียว ครั้งต่อไปไม่ต้องกดอีก ── */
+function connectLine() {
+  if (typeof liff === "undefined" || !liffReady) {
+    showToast("⚠️ ตอนนี้เชื่อมบัญชี LINE ไม่ได้ ลองใหม่อีกครั้งนะครับ");
     return;
   }
-
-  await submitOrder(houseNo, soi, note, lineProfile ? lineProfile.userId : null, lineProfile ? lineProfile.displayName : "");
+  const houseNo = document.getElementById("fldHouseNo") ? document.getElementById("fldHouseNo").value.trim() : "";
+  const soi = document.getElementById("fldSoi") ? document.getElementById("fldSoi").value.trim() : "";
+  const note = document.getElementById("fldNote") ? document.getElementById("fldNote").value.trim() : "";
+  const pending = { cart, sauce: globalSauce, veg: globalVeg, houseNo, soi, note };
+  sessionStorage.setItem("sb_pending_order", JSON.stringify(pending));
+  try {
+    liff.login({ redirectUri: window.location.href });
+  } catch (err) {
+    console.error("liff.login error:", err);
+    sessionStorage.removeItem("sb_pending_order");
+    showToast("⚠️ เชื่อมบัญชี LINE ไม่สำเร็จ ลองใหม่อีกครั้งนะครับ");
+  }
 }
 
 /* ── ส่งออเดอร์จริงเข้า Apps Script (เรียกจาก sendToLine ทั้งกรณีมี/ไม่มี userId) ── */
