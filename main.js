@@ -280,7 +280,7 @@ function renderModal() {
   </div>`;
 
   const lineConnectHTML = `<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 14px;margin-top:10px;background:rgba(255,255,255,0.04);border:1px dashed rgba(255,255,255,0.15);border-radius:12px;font-size:12px;">
-        <span>➕ เพิ่มเพื่อน LINE OA เพื่อรับข่าวสารและโปรโมชัน</span>
+        <span>➕ เพิ่มเพื่อน LINE OA เพื่อรับข่าวสารและโปรโมชัน หรือกดข้ามขั้นตอนนี้ได้</span>
         <button type="button" onclick="connectLine()" style="white-space:nowrap;background:#06c755;color:#fff;border:none;border-radius:8px;padding:6px 12px;font-size:12px;font-weight:700;cursor:pointer;">เพิ่มเพื่อน</button>
       </div>`;
 
