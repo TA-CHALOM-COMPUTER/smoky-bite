@@ -1,30 +1,28 @@
 const IMG = {
-  s1: "https://i.ibb.co/1Y4fr8Pm/1.jpg",
-  s2: "https://i.ibb.co/GQkb6htw/2.jpg",
-  s3: "https://i.ibb.co/Mk5rBykB/3.jpg",
-  s4: "https://i.ibb.co/0RXdjKYW/4.jpg",
-  s5: "https://i.ibb.co/dJw4Wfj2/5.jpg",
-  j6: "https://i.ibb.co/3Y41Nbmd/6.png",
-  j7: "https://i.ibb.co/kshkw5ww/7.jpg",
-  j8: "https://i.ibb.co/GvKL2nxh/8.jpg",
-  j9: "https://i.ibb.co/cK418SKp/9.jpg",
-  j10: "https://i.ibb.co/zWpcrp1j/10.jpg",
+  s1: "https://i.ibb.co/zT3jxWfY/1-GF.avif",
+  s2: "https://i.ibb.co/WNMF2RWM/2-AFM.avif",
+  s3: "https://i.ibb.co/YBtDWQBS/3-PP.avif",
+  j4: "https://i.ibb.co/Swywfw1D/4-PP.avif",
+  j5: "https://i.ibb.co/rTFy10R/5-GF.avif",
+  j6: "https://i.ibb.co/1Y5mTbLn/6-GF.avif",
+  j7: "https://i.ibb.co/k6GL8Vc5/7-GF.avif",
+  j8: "https://i.ibb.co/xKLkH9fG/8-GF-18.avif",
+  j9: "https://i.ibb.co/GQpMmZMM/9-PP.avif",
 };
 
 const smallMenus = [
-  { id: "s1", num: 1, name: "หนังกรอบไก่", price: 7 },
-  { id: "s2", num: 2, name: "หนังกรอบหมู", price: 7 },
-  { id: "s3", num: 3, name: "กะเพรา", price: 7 },
-  { id: "s4", num: 4, name: "รมควันไก่ สอดไส้ชีส", price: 7 },
-  { id: "s5", num: 5, name: "นมวนิลา สอดไส้ชีส", price: 7 },
+  { id: "s1", num: 1, name: "GF ไส้กรอกไก่บดหยาบ", price: 7 },
+  { id: "s2", num: 2, name: "AFM รมควันหนังกรอบ สอดไส้ชีส", price: 7 },
+  { id: "s3", num: 3, name: "PP หนังกรอบ หมูดี", price: 7 },
 ];
 
 const jumboMenus = [
-  { id: "j6", num: 6, name: "จัมโบ้ชีส", price: 10, tag: "ขายดีประจำร้าน" },
-  { id: "j7", num: 7, name: "เวียนนารมควัน", price: 10, tag: "หอมมากก" },
-  { id: "j8", num: 8, name: "นมเบทาโกร", price: 10 },
-  { id: "j9", num: 9, name: "หมูผสมไก่ เบทาโกร", price: 10 },
-  { id: "j10", num: 10, name: "หนังไก่กรอบ TFG", price: 10 },
+  { id: "j4", num: 4, name: "หนังไก่กรอบ TFG", price: 10 },
+  { id: "j5", num: 5, name: "GF วนิลาชีส จัมโบ้", price: 10 },
+  { id: "j6", num: 6, name: "เวียนนารมควัน", price: 10, tag: "หอมมากก" },
+  { id: "j7", num: 7, name: "GF ไส้กรอกกระเพรา", price: 10 },
+  { id: "j8", num: 8, name: "ไส้กรอกไก่ ทรัฟเฟิลชีส จัมโบ้ (18 ชิ้น)", price: 10 },
+  { id: "j9", num: 9, name: "PP จั้มโบ้ชีส", price: 10, tag: "ขายดีประจำร้าน" },
 ];
 
 let cart = [];
