@@ -31,50 +31,12 @@ let cart = [];
 let globalSauce = "ซอสรวม";
 let globalVeg = "🥬 ใส่ผัก";
 
-/* ── LIFF (LINE Login) ── */
-const LIFF_ID = "2010749510-214dgBnJ";
-let liffReady = false;
-let lineProfile = null;
+/* ── ลิงก์เพิ่มเพื่อน LINE OA ── */
+const LINE_OA_LINK = "https://line.me/ti/p/@651yehql";
 
-async function initLiff() {
-  if (typeof liff === "undefined") { console.warn("LIFF SDK โหลดไม่สำเร็จ (สั่งซื้อได้ปกติ แต่จะไม่ได้รับข้อความยืนยันทาง LINE)"); return; }
-  try {
-    await liff.init({ liffId: LIFF_ID });
-    liffReady = true;
-    if (liff.isLoggedIn()) {
-      lineProfile = await liff.getProfile();
-    }
-  } catch (err) {
-    console.error("LIFF init error:", err);
-  }
-  restorePendingOrder();
-}
-window.addEventListener("DOMContentLoaded", initLiff);
-
-/* ── กู้ตะกร้า+ฟอร์มที่ค้างไว้ หลังลูกค้าถูก redirect ไปล็อกอิน LINE แล้วกลับมา ── */
-function restorePendingOrder() {
-  const saved = sessionStorage.getItem("sb_pending_order");
-  if (!saved) return;
-  sessionStorage.removeItem("sb_pending_order");
-  try {
-    const state = JSON.parse(saved);
-    cart = state.cart || [];
-    globalSauce = state.sauce || globalSauce;
-    globalVeg = state.veg || globalVeg;
-    updateCartBar();
-    if (cart.length > 0) {
-      openCart();
-      setTimeout(() => {
-        const h = document.getElementById("fldHouseNo");
-        const s = document.getElementById("fldSoi");
-        const n = document.getElementById("fldNote");
-        if (h && state.houseNo) h.value = state.houseNo;
-        if (s && state.soi) s.value = state.soi;
-        if (n && state.note) n.value = state.note;
-        showToast("✅ ยืนยันตัวตนผ่าน LINE แล้ว กดส่งออเดอร์อีกครั้งได้เลยครับ");
-      }, 150);
-    }
-  } catch (e) { console.error(e); }
+/* ── เปิดหน้าเพิ่มเพื่อน LINE OA โดยตรง ── */
+function connectLine() {
+  window.open(LINE_OA_LINK, "_blank");
 }
 
 /* ── Build product card ── */
@@ -302,13 +264,9 @@ function renderModal() {
     </div>
   </div>`;
 
-  const lineConnectHTML = lineProfile
-    ? `<div style="display:flex;align-items:center;gap:8px;padding:10px 14px;margin-top:10px;background:rgba(6,199,85,0.08);border:1px solid rgba(6,199,85,0.25);border-radius:12px;font-size:12px;">
-        <span>✅</span><span>เชื่อมบัญชี LINE แล้ว (${lineProfile.displayName}) — ร้านจะส่งข้อความยืนยันออเดอร์ให้ทาง LINE อัตโนมัติ</span>
-      </div>`
-    : `<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 14px;margin-top:10px;background:rgba(255,255,255,0.04);border:1px dashed rgba(255,255,255,0.15);border-radius:12px;font-size:12px;">
-        <span>💬 อยากรับข้อความยืนยันออเดอร์ทาง LINE ไหม?</span>
-        <button type="button" onclick="connectLine()" style="white-space:nowrap;background:#06c755;color:#fff;border:none;border-radius:8px;padding:6px 12px;font-size:12px;font-weight:700;cursor:pointer;">เชื่อมบัญชี LINE</button>
+  const lineConnectHTML = `<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 14px;margin-top:10px;background:rgba(255,255,255,0.04);border:1px dashed rgba(255,255,255,0.15);border-radius:12px;font-size:12px;">
+        <span>➕ เพิ่มเพื่อน LINE OA เพื่อรับข่าวสารและโปรโมชัน</span>
+        <button type="button" onclick="connectLine()" style="white-space:nowrap;background:#06c755;color:#fff;border:none;border-radius:8px;padding:6px 12px;font-size:12px;font-weight:700;cursor:pointer;">เพิ่มเพื่อน</button>
       </div>`;
 
   body.innerHTML = itemsHTML + summaryHTML + sauceVegSectionHTML + formHTML + lineConnectHTML;
@@ -347,7 +305,7 @@ function genOrderId() {
 /* ── ตั้งค่า Apps Script Web App URL (ได้จากขั้นตอน Deploy) ── */
 const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbysYdksZPEhoR7eZrtBpkUXpKPuCPBV1BbgDOwyFbFp7Qgb-fV4t9_hX-9oWVggPEQ/exec";
 
-/* ── ส่งออเดอร์ (ไม่ต้องแอดเพื่อน/ล็อกอิน LINE ก็สั่งได้ปกติ) ── */
+/* ── ส่งออเดอร์ (ไม่ต้องแอดเพื่อน LINE) ── */
 async function sendToLine() {
   if (cart.length === 0) return;
   if (!validateForm()) { showToast("⚠️ กรุณากรอกบ้านเลขที่"); return; }
@@ -355,32 +313,6 @@ async function sendToLine() {
   const houseNo = document.getElementById("fldHouseNo").value.trim();
   const soi = document.getElementById("fldSoi").value.trim();
   const note = document.getElementById("fldNote").value.trim();
-
-  await submitOrder(houseNo, soi, note, lineProfile ? lineProfile.userId : null, lineProfile ? lineProfile.displayName : "");
-}
-
-/* ── เชื่อมบัญชี LINE (ไม่บังคับ) — กดครั้งเดียว ครั้งต่อไปไม่ต้องกดอีก ── */
-function connectLine() {
-  if (typeof liff === "undefined" || !liffReady) {
-    showToast("⚠️ ตอนนี้เชื่อมบัญชี LINE ไม่ได้ ลองใหม่อีกครั้งนะครับ");
-    return;
-  }
-  const houseNo = document.getElementById("fldHouseNo") ? document.getElementById("fldHouseNo").value.trim() : "";
-  const soi = document.getElementById("fldSoi") ? document.getElementById("fldSoi").value.trim() : "";
-  const note = document.getElementById("fldNote") ? document.getElementById("fldNote").value.trim() : "";
-  const pending = { cart, sauce: globalSauce, veg: globalVeg, houseNo, soi, note };
-  sessionStorage.setItem("sb_pending_order", JSON.stringify(pending));
-  try {
-    liff.login({ redirectUri: window.location.href });
-  } catch (err) {
-    console.error("liff.login error:", err);
-    sessionStorage.removeItem("sb_pending_order");
-    showToast("⚠️ เชื่อมบัญชี LINE ไม่สำเร็จ ลองใหม่อีกครั้งนะครับ");
-  }
-}
-
-/* ── ส่งออเดอร์จริงเข้า Apps Script (เรียกจาก sendToLine ทั้งกรณีมี/ไม่มี userId) ── */
-async function submitOrder(houseNo, soi, note, userId, displayName) {
   const total = cartGrandTotal();
   const count = totalCount();
   const addrLine = soi ? `บ้านเลขที่ ${houseNo}  ซ.${soi}` : `บ้านเลขที่ ${houseNo}`;
@@ -397,9 +329,7 @@ async function submitOrder(houseNo, soi, note, userId, displayName) {
     veg: globalVeg,
     note,
     total,
-    count,
-    userId: userId || null,
-    displayName: displayName || ""
+    count
   };
 
   const btnLine = document.getElementById("btnLine");
@@ -416,7 +346,7 @@ async function submitOrder(houseNo, soi, note, userId, displayName) {
       headers: { "Content-Type": "text/plain;charset=utf-8" },
       body: JSON.stringify(orderPayload)
     });
-    showSuccess(orderPayload);
+    showSuccess();
   } catch (err) {
     console.error("ส่งออเดอร์ไม่สำเร็จ:", err);
     showToast("⚠️ ส่งออเดอร์ไม่สำเร็จ กรุณาลองใหม่ หรือโทร 063-509-6265");
@@ -426,59 +356,20 @@ async function submitOrder(houseNo, soi, note, userId, displayName) {
 }
 
 /* ── Success screen ── */
-function showSuccess(order) {
+function showSuccess() {
   const body = document.getElementById("modalBody");
   const btnLine = document.getElementById("btnLine");
   btnLine.style.display = "none";
   const sub = document.getElementById("modalHeadSub");
-  sub.textContent = "ร้านได้รับออเดอร์แล้ว 🎉";
-
-  const itemsHTML = order.items.map(it => `
-    <div class="os-item">
-      <div class="os-item-left">
-        <div class="os-item-name">${it.name}</div>
-        <div class="os-item-detail">จำนวน ${it.qty} ชิ้น</div>
-      </div>
-      <div class="os-item-price">฿${it.price}</div>
-    </div>`).join("");
-
+  sub.textContent = "ส่งออเดอร์เสร็จแล้ว 🎉";
   body.innerHTML = `<div class="success-screen">
     <div class="success-glow">✅</div>
-    <div class="success-title">เราได้รับออเดอร์ของคุณแล้ว!</div>
-    <div class="success-sub">รบกวนทวนรายการอีกครั้งนะครับ<br>รอร้านยืนยัน &amp; จัดส่งสักครู่นะครับ 🙏</div>
-  </div>
-
-  <div class="section-divider"><span>เลขที่ออเดอร์</span></div>
-  <div class="order-summary" style="text-align:center;padding:14px;">
-    <div style="font-size:18px;font-weight:900;letter-spacing:0.5px;color:var(--fire2, #ffaa00);">${order.orderId}</div>
-    <div style="font-size:12px;color:var(--muted);margin-top:4px;">${order.date} • ${order.time}</div>
-  </div>
-
-  <div class="section-divider"><span>ทวนรายการสั่งซื้อ</span></div>
-  <div class="order-summary">
-    <div class="os-header">🧾 รายการสินค้า <span class="count-chip">${order.count} ชิ้น</span></div>
-    ${itemsHTML}
-    <div class="os-total-row">
-      <div>
-        <div class="os-total-label">ยอดรวมทั้งหมด</div>
-        <div class="os-total-note">🥫 ซอส: ${order.sauce} • 🥬 ${order.veg}</div>
-      </div>
-      <div class="os-total-amount">฿${order.total}</div>
-    </div>
-  </div>
-
-  <div class="section-divider"><span>จัดส่งไปที่</span></div>
-  <div class="order-summary" style="padding:12px 14px;">
-    <div style="font-size:14px;">📍 ${order.address}</div>
-    ${order.note ? `<div style="font-size:12px;color:var(--muted);margin-top:6px;">📝 ${order.note}</div>` : ""}
-  </div>
-
-  <div class="success-screen" style="padding-top:20px;padding-bottom:8px;min-height:auto;">
-    <div class="success-countdown" id="successCountdown">กลับสู่หน้าหลักใน 5 วินาที...</div>
+    <div class="success-title">ส่งออเดอร์เรียบร้อยแล้ว!</div>
+    <div class="success-sub">ร้านได้รับรายการสั่งซื้อแล้วครับ<br>รอร้านยืนยันออเดอร์สักครู่นะครับ 🙏</div>
+    <div class="success-countdown" id="successCountdown">กลับสู่หน้าหลักใน 3 วินาที...</div>
     <div class="success-bar-wrap"><div class="success-bar" id="successBar"></div></div>
   </div>`;
-
-  let sec = 5;
+  let sec = 3;
   const bar = document.getElementById("successBar");
   bar.style.transition = "width " + sec + "s linear";
   setTimeout(() => { bar.style.width = "0%"; }, 50);
