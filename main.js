@@ -145,8 +145,25 @@ function updateCartBar() {
 }
 
 /* ── Modal controls ── */
+let isOrderSuccess = false;
+
 function openCart() { renderModal(); document.getElementById("modalBg").classList.add("open"); document.body.style.overflow = "hidden"; }
-function closeCart() { document.getElementById("modalBg").classList.remove("open"); document.body.style.overflow = ""; }
+
+function closeCart() {
+  document.getElementById("modalBg").classList.remove("open");
+  document.body.style.overflow = "";
+  if (isOrderSuccess) {
+    // ลูกค้ากดปิดหน้าสำเร็จเอง -> เคลียร์ตะกร้า/ฟอร์มกลับสู่สภาพเริ่มต้น
+    isOrderSuccess = false;
+    const btnLine = document.getElementById("btnLine");
+    cart = []; globalSauce = "ซอสรวม"; globalVeg = "🥬 ใส่ผัก";
+    btnLine.disabled = false;
+    btnLine.innerHTML = `<span>💬</span><span>สั่งผ่าน LINE ทันที!<span class="btn-line-sub">กดเพื่อส่งออเดอร์ไปหาร้าน</span></span>`;
+    btnLine.style.display = "";
+    updateCartBar();
+  }
+}
+
 function closeCartOutside(e) { if (e.target === document.getElementById("modalBg")) closeCart(); }
 
 /* ── Render modal ── */
@@ -360,32 +377,15 @@ function showSuccess() {
   const body = document.getElementById("modalBody");
   const btnLine = document.getElementById("btnLine");
   btnLine.style.display = "none";
+  isOrderSuccess = true;
   const sub = document.getElementById("modalHeadSub");
   sub.textContent = "ส่งออเดอร์เสร็จแล้ว 🎉";
   body.innerHTML = `<div class="success-screen">
     <div class="success-glow">✅</div>
     <div class="success-title">ส่งออเดอร์เรียบร้อยแล้ว!</div>
     <div class="success-sub">ร้านได้รับรายการสั่งซื้อแล้วครับ<br>รอร้านยืนยันออเดอร์สักครู่นะครับ 🙏</div>
-    <div class="success-countdown" id="successCountdown">กลับสู่หน้าหลักใน 3 วินาที...</div>
-    <div class="success-bar-wrap"><div class="success-bar" id="successBar"></div></div>
+    <div class="success-countdown">กดปุ่ม ✕ ด้านบนเพื่อปิดหน้าต่างนี้ได้เลยครับ</div>
   </div>`;
-  let sec = 3;
-  const bar = document.getElementById("successBar");
-  bar.style.transition = "width " + sec + "s linear";
-  setTimeout(() => { bar.style.width = "0%"; }, 50);
-  const timer = setInterval(() => {
-    sec--;
-    const el = document.getElementById("successCountdown");
-    if (el) el.textContent = "กลับสู่หน้าหลักใน " + sec + " วินาที...";
-    if (sec <= 0) {
-      clearInterval(timer);
-      cart = []; globalSauce = "ซอสรวม"; globalVeg = "🥬 ใส่ผัก";
-      btnLine.disabled = false;
-      btnLine.innerHTML = `<span>💬</span><span>สั่งผ่าน LINE ทันที!<span class="btn-line-sub">กดเพื่อส่งออเดอร์ไปหาร้าน</span></span>`;
-      btnLine.style.display = "";
-      updateCartBar(); closeCart();
-    }
-  }, 1000);
 }
 
 /* ── Toast notification ── */
