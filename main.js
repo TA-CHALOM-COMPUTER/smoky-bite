@@ -11,18 +11,18 @@ const IMG = {
 };
 
 const smallMenus = [
-  { id: "s1", num: 1, name: "GF ไส้กรอกไก่บดหยาบ", price: 7 },
-  { id: "s2", num: 2, name: "AFM รมควันหนังกรอบ สอดไส้ชีส", price: 7 },
-  { id: "s3", num: 3, name: "PP หนังกรอบ หมูดี", price: 7 },
+  { id: "s1", num: 1, name: "ไก่บดหยาบ GF", price: 7 },
+  { id: "s2", num: 2, name: "รมควันหนังกรอบ สอดไส้ชีส AFM", price: 7 },
+  { id: "s3", num: 3, name: "หนังกรอบหมู", price: 7 },
 ];
 
 const jumboMenus = [
-  { id: "j4", num: 4, name: "หนังไก่กรอบ TFG", price: 10 },
-  { id: "j5", num: 5, name: "GF วนิลาชีส จัมโบ้", price: 10 },
+  { id: "j4", num: 4, name: "หนังไก่กรอบ GF", price: 10 },
+  { id: "j5", num: 5, name: "วนิลาชีส จัมโบ้ GF", price: 10 },
   { id: "j6", num: 6, name: "เวียนนารมควัน", price: 10, tag: "หอมมากก" },
-  { id: "j7", num: 7, name: "GF ไส้กรอกกระเพรา", price: 10 },
-  { id: "j8", num: 8, name: "ไส้กรอกไก่ ทรัฟเฟิลชีส จัมโบ้ (18 ชิ้น)", price: 10 },
-  { id: "j9", num: 9, name: "PP จั้มโบ้ชีส", price: 10, tag: "ขายดีประจำร้าน" },
+  { id: "j7", num: 7, name: "ไส้กรอกกระเพรา GF", price: 10 },
+  { id: "j8", num: 8, name: "ไส้กรอกไก่ ทรัฟเฟิลชีส จัมโบ้", price: 10 },
+  { id: "j9", num: 9, name: "จั้มโบ้ชีส", price: 10, tag: "ขายดีประจำร้าน" },
 ];
 
 let cart = [];
