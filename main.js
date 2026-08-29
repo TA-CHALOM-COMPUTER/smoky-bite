@@ -1,13 +1,13 @@
 const IMG = {
-  s1: "https://i.ibb.co/zT3jxWfY/1-GF.avif",
-  s2: "https://i.ibb.co/WNMF2RWM/2-AFM.avif",
-  s3: "https://i.ibb.co/YBtDWQBS/3-PP.avif",
-  j4: "https://i.ibb.co/Swywfw1D/4-PP.avif",
-  j5: "https://i.ibb.co/rTFy10R/5-GF.avif",
-  j6: "https://i.ibb.co/1Y5mTbLn/6-GF.avif",
-  j7: "https://i.ibb.co/k6GL8Vc5/7-GF.avif",
-  j8: "https://i.ibb.co/xKLkH9fG/8-GF-18.avif",
-  j9: "https://i.ibb.co/GQpMmZMM/9-PP.avif",
+  s1: "https://i.ibb.co/XrrxKX4K/1.png",
+  s2: "https://i.ibb.co/23KwPCgh/2.png",
+  s3: "https://i.ibb.co/vCNF5C3Q/3.jpg",
+  j4: "https://i.ibb.co/HThwy0Vd/4.jpg",
+  j5: "https://i.ibb.co/nNMwsXwJ/5.png",
+  j6: "https://i.ibb.co/TqK1RHyM/6.png",
+  j7: "https://i.ibb.co/YBHMY9sX/7.png",
+  j8: "https://i.ibb.co/N61cd9dt/8.png",
+  j9: "https://i.ibb.co/DfPSHn7s/9.png",
 };
 
 const smallMenus = [
