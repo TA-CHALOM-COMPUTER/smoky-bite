@@ -8,6 +8,9 @@ const IMG = {
   j7: "https://i.ibb.co/YBHMY9sX/7.png",
   j8: "https://i.ibb.co/N61cd9dt/8.png",
   j9: "https://i.ibb.co/DfPSHn7s/9.png",
+  // TODO: แทนที่ด้วย "Direct link" ของรูปฟุตลอง (ต้องขึ้นต้น https://i.ibb.co/ และลงท้ายด้วย .jpg/.png)
+  //       ลิงก์ที่ให้มา https://ibb.co/ZRyrpwwT เป็นลิงก์หน้าเว็บ ใช้เป็น src ของรูปโดยตรงไม่ได้
+  f10: "logo.png",
 };
 
 const smallMenus = [
@@ -23,6 +26,10 @@ const jumboMenus = [
   { id: "j7", num: 7, name: "ไส้กรอกกระเพรา GF", price: 10 },
   { id: "j8", num: 8, name: "ไส้กรอกไก่ ทรัฟเฟิลชีส จัมโบ้", price: 10 },
   { id: "j9", num: 9, name: "จั้มโบ้ชีส", price: 10, tag: "ขายดีประจำร้าน" },
+];
+
+const footlongMenus = [
+  { id: "f10", num: 10, name: "ฟุตลองไก่รมควัน", price: 15, tag: "เมนูใหม่" },
 ];
 
 let cart = [];
@@ -66,6 +73,7 @@ function buildCard(m, isJumbo) {
 
 document.getElementById("grid-small").innerHTML = smallMenus.map(m => buildCard(m, false)).join("");
 document.getElementById("grid-jumbo").innerHTML = jumboMenus.map(m => buildCard(m, true)).join("");
+document.getElementById("grid-footlong").innerHTML = footlongMenus.map(m => buildCard(m, true)).join("");
 
 /* ── Quantity controls ── */
 function chgQty(id, d) {
