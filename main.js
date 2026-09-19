@@ -8,9 +8,7 @@ const IMG = {
   j7: "https://i.ibb.co/YBHMY9sX/7.png",
   j8: "https://i.ibb.co/N61cd9dt/8.png",
   j9: "https://i.ibb.co/DfPSHn7s/9.png",
-  // TODO: แทนที่ด้วย "Direct link" ของรูปฟุตลอง (ต้องขึ้นต้น https://i.ibb.co/ และลงท้ายด้วย .jpg/.png)
-  //       ลิงก์ที่ให้มา https://ibb.co/ZRyrpwwT เป็นลิงก์หน้าเว็บ ใช้เป็น src ของรูปโดยตรงไม่ได้
-  f10: "logo.png",
+  f10: "https://i.ibb.co/j97YPxx4/512439-00-sausage-bologna-and-ham-ezy-taste.jpg",
 };
 
 const smallMenus = [
